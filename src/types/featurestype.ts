@@ -7,3 +7,20 @@ export interface Features {
     desc : string,
     props : React.FC<LucideProps>
 }
+
+export interface steps {
+    id : number,
+    title : string,
+    desc : string
+}
+
+export interface list {
+    id : number,
+    desc : string
+}
+
+export interface carouselitems {
+    id : number,
+    user : string,
+    comment : string
+}
