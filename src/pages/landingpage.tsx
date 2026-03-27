@@ -9,7 +9,6 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
-
     const { theme, setTheme } = useTheme();
     const navigate = useNavigate();
     const homeRef = useRef<HTMLDivElement | null>(null);
@@ -59,17 +58,17 @@ export const Home = () => {
             </AnimatePresence>
             <header className="fixed top-0 flex border-b bg-background border-gray-500 justify-between z-50 items-center w-full px-5 py-3">
                 <div className="flex items-center gap-2">
-                    <BadgeDollarSign/>
+                    <BadgeDollarSign />
                     <h1 className="text-2xl font-medium">FinnyT</h1>
+                    <div className="ml-5 flex gap-3 text-sm max-md:hidden">
+                        <button onClick={() => scrollTo(homeRef)}>Home</button>
+                        <button onClick={() => scrollTo(toolref)}>Tools</button>
+                        <button onClick={() => scrollTo(workRef)}>How It Work?</button>
+                        <button onClick={() => scrollTo(sessionRef)}>Why Choose Us?</button>
+                        <button onClick={() => scrollTo(reviewRef)}>Review</button>
+                    </div>
                 </div>
-                <div className="flex gap-8 max-md:hidden">
-                    <button onClick={() => scrollTo(homeRef)}>Home</button>
-                    <button onClick={() => scrollTo(toolref)}>Tools</button>
-                    <button onClick={() => scrollTo(workRef)}>How It Work?</button>
-                    <button onClick={() => scrollTo(sessionRef)}>Why Choose Us?</button>
-                    <button onClick={() => scrollTo(reviewRef)}>Review</button>
 
-                </div>
                 <div className="flex gap-3 max-md:hidden">
                     <Button className="rounded-full" variant="outline" onClick={toggletheme}>
                         {theme === "light" ? <Sun /> : <Moon />}
@@ -114,7 +113,7 @@ export const Home = () => {
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
-                        className="text-5xl max-md:text-4xl">Experience The Ai Powered Financial Management.</motion.h1>
+                        className="text-5xl max-md:text-4xl">Experience The Ai Powered Financial Management With Agenting.</motion.h1>
                     <motion.p
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -232,7 +231,7 @@ export const Home = () => {
                                         <p>{element.desc}</p>
                                     </motion.div>
                                 </AnimatePresence>
-                                <div className="absolute  left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-background border dark:border-gray-600 border-white rounded-full"></div>
+                                <div className="absolute  left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-background dark:border-white border-gray-500 border rounded-full"></div>
                             </div>
                         ))}
                     </div>
@@ -280,7 +279,10 @@ export const Home = () => {
                 <div className=" mx-auto px-10">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                         <div className="md:col-span-3 space-y-6">
-                            <h2 className="text-2xl font-bold tracking-tight text-primary">FinnyT</h2>
+                            <h2 className="flex gap-2 items-center text-2xl font-bold tracking-tight text-primary">
+                                <BadgeDollarSign />
+                                FinnyT
+                            </h2>
                             <p className="max-w-xs leading-relaxed">
                                 Making financial intelligence accessible for everyone. Automate your tracking, gain insights, and grow your wealth.
                             </p>

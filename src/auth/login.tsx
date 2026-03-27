@@ -65,7 +65,7 @@ export const Login = () => {
                             <span className="w-full border-t border-slate-200" />
                         </div>
                         <div className="relative flex justify-center text-xs uppercase">
-                            <span className="bg-background px-2 text-muted-foreground">
+                            <span className="bg-background rounded-lg px-2 text-muted-foreground">
                                 Or continue with
                             </span>
                         </div>
