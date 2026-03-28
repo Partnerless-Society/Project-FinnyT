@@ -3,13 +3,17 @@ import type { authcreate } from "@/types/authtype";
 import { create } from "zustand";
 
 export const useAuthStore = create<authcreate>((set) => ({
+    //Variable
     loadingsignup: false,
     loadinglogin: false,
+
+    
+    //Function
     usersignup: async (
         name: string,
         email: string,
         password: string,
-        type: string
+        confirmpassword : string
     ) => {
         try {
             set({ loadingsignup: true });
@@ -17,7 +21,7 @@ export const useAuthStore = create<authcreate>((set) => ({
                 name,
                 email,
                 password,
-                type
+                confirmpassword
             )
             return result;
         }

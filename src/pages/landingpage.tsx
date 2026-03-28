@@ -9,8 +9,16 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
+    //Theme
     const { theme, setTheme } = useTheme();
+    const toggletheme = () => {
+        setTheme(theme === "dark" ? "light" : "dark");
+    };
+
+    //Navigation
     const navigate = useNavigate();
+
+    //States
     const homeRef = useRef<HTMLDivElement | null>(null);
     const toolref = useRef<HTMLDivElement | null>(null);
     const workRef = useRef<HTMLDivElement | null>(null);
@@ -18,14 +26,11 @@ export const Home = () => {
     const reviewRef = useRef<HTMLDivElement | null>(null);
     const [menutoggle, setmenutoggle] = useState<boolean>(false);
     const [showScrollTop, setShowScrollTop] = useState(false);
+
+    //Function
     const scrollTo = (ref: React.RefObject<HTMLDivElement | null>) => {
         ref.current?.scrollIntoView({ behavior: "smooth" });
     };
-
-    const toggletheme = () => {
-        setTheme(theme === "dark" ? "light" : "dark");
-    };
-
     useEffect(() => {
         const handleScroll = () => {
             setShowScrollTop(window.scrollY > 300);

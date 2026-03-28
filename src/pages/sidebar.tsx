@@ -30,12 +30,12 @@ const navItems = [
 ];
 
 export const Sidebarrrender = () => {
- const {theme, setTheme} = useTheme();
-
+    //Theme
+    const { theme, setTheme } = useTheme();
     const toggletheme = () => {
         setTheme(theme === "dark" ? "light" : "dark");
     };
-    
+
     return (
         <SidebarProvider defaultOpen={false}>
             <Sidebar collapsible="icon" variant="floating">

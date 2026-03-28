@@ -5,12 +5,12 @@ export interface authreturn {
 
 export interface authcreate {
     loadingsignup: boolean,
-    loadinglogin : boolean,
+    loadinglogin: boolean,
     usersignup: (
         name: string,
         email: string,
         password: string,
-        type: string) => Promise<authreturn>,
+        confirmpassword: string) => Promise<authreturn>,
     userlogin: (
         email: string,
         password: string

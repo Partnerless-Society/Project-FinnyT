@@ -7,13 +7,13 @@ export const authapi = {
         name: string,
         email: string,
         password: string,
-        type: string,
+        confirmpassword : string
     ): Promise<authreturn> => {
-        const response = await Server.post("/api/signup", {
+        const response = await Server.post("/user/api/signup", {
             name,
             email,
             password,
-            type
+            confirmpassword
         })
         return response.data
     },
@@ -22,7 +22,7 @@ export const authapi = {
         email: string,
         password: string
     ): Promise<authreturn> => {
-        const response = await Server.post("/api/login", {
+        const response = await Server.post("/user/api/login", {
             email,
             password
         })

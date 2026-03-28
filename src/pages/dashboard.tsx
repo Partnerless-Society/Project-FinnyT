@@ -52,7 +52,6 @@ export const Dashboard = () => {
                         <CardDescription className="flex gap-1 mt-2 font-medium"><Sparkle size={20} />Ai Overview: This Look Good Remember</CardDescription>
                     </CardContent>
                 </Card>
-
             </motion.div>
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
