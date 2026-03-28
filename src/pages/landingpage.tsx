@@ -239,8 +239,18 @@ export const Home = () => {
             </section>
             <section ref={reviewRef} className="flex justify-center items-center min-h-screen max-md:px-15 px-25">
                 <div className="flex flex-col items-center">
-                    <h1 className="text-3xl font-medium">What Our Users Say</h1>
-                    <div className="mt-5">
+                    <motion.h1
+                        initial={{ opacity: 0, y: -20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.5 }}
+                        transition={{ duration: 0.5 }}
+                        className="text-3xl font-medium">What Our Users Say</motion.h1>
+                    <motion.div
+                        initial={{ opacity: 0, y: -20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.5 }}
+                        transition={{ duration: 0.5 }}
+                        className="mt-5">
                         <Carousel
                             opts={{ align: "center", loop: false }}
                             className="w-full max-w-[80vw] relative"
@@ -269,7 +279,7 @@ export const Home = () => {
                                 <CarouselNext className="static md:absolute translate-y-0 md:-right-12" />
                             </div>
                         </Carousel>
-                    </div>
+                    </motion.div>
                 </div>
             </section>
             <section>

@@ -1,9 +1,4 @@
 import {
-    Wallet,
-    TrendingUp,
-    ReceiptText,
-    PiggyBank,
-    CreditCard,
     BadgeDollarSign,
     LayoutDashboard,
     Sun,

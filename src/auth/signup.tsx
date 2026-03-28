@@ -7,18 +7,32 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useTheme } from "@/components/ui/themeprovider";
+import { useAuthStore } from "@/store/authstore";
 import { Github, Chrome, DoorOpenIcon, ArrowRight, Sun, Moon } from "lucide-react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export const Signup = () => {
+    //Theme
     const { theme, setTheme } = useTheme();
     const navigate = useNavigate();
     const toggletheme = () => {
         setTheme(theme === "dark" ? "light" : "dark");
     };
+
+    //State
+    const [username, setusername] = useState<string>("");
+    const [useremail,setuseremail] = useState<string>("");
+    const [password, setpassword] = useState<string>("");
+    const [confirmpassword,setconfirmpassword] = useState<string>("");
+
+    //Store
+    const { usersignup , loadingsignup } = useAuthStore();
+
+
     return (
         <div className="flex min-h-screen w-full items-center justify-center p-4">
             <Card className="w-full max-w-md shadow-lg">
@@ -35,18 +49,30 @@ export const Signup = () => {
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="grid gap-4">
-                    <div className="grid gap-2">
-                        <Label htmlFor="full-name">Full Name</Label>
-                        <Input id="full-name" type="text" placeholder="Enter Username" />
-                    </div>
-                    <div className="grid gap-2">
-                        <Label htmlFor="email">Email</Label>
-                        <Input id="email" type="email" placeholder="example@gmail.com" />
-                    </div>
-                    <div className="grid gap-2">
-                        <Label htmlFor="password">Password</Label>
-                        <Input id="password" type="password" placeholder="Enter Password" />
-                    </div>
+                    <Field>
+                        <div className="grid gap-2">
+                            <FieldLabel htmlFor="full-name">Full Name</FieldLabel>
+                            <Input id="full-name" type="text" value={username} onChange={(e) => setusername(e.target.value)} placeholder="Enter Username" />
+                        </div>
+                    </Field>
+                    <Field>
+                        <div className="grid gap-2">
+                            <FieldLabel htmlFor="email">Email</FieldLabel>
+                            <Input id="email" type="email" value={useremail} onChange={(e) => setuseremail(e.target.value)} placeholder="example@gmail.com" />
+                        </div>
+                    </Field>
+                    <Field>
+                        <div className="grid gap-2">
+                            <FieldLabel htmlFor="password">Password</FieldLabel>
+                            <Input id="password" type="password" value={password} onChange={(e) => setpassword(e.target.value)} placeholder="Enter Password" />
+                        </div>
+                    </Field>
+                      <Field>
+                        <div className="grid gap-2">
+                            <FieldLabel htmlFor="password">Confirm Password</FieldLabel>
+                            <Input id="confirmpassword" type="password" value={confirmpassword} onChange={(e) => setconfirmpassword(e.target.value)} placeholder="Enter Confirm Password" />
+                        </div>
+                    </Field>
                 </CardContent>
                 <CardFooter className="flex flex-col gap-4">
                     <Button className="w-full group">
@@ -64,7 +90,7 @@ export const Signup = () => {
                             <span className="w-full border-t border-slate-200" />
                         </div>
                         <div className="relative flex justify-center text-xs uppercase">
-                            <span className="bg-background px-2 text-muted-foreground">
+                            <span className="bg-white dark:bg-card px-2 text-muted-foreground">
                                 Or continue with
                             </span>
                         </div>

@@ -7,18 +7,30 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useTheme } from "@/components/ui/themeprovider";
+import { useAuthStore } from "@/store/authstore";
 import { Github, Chrome, ArrowRight, DoorOpenIcon, Sun, Moon } from "lucide-react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 export const Login = () => {
+    //Theme
     const { theme, setTheme } = useTheme();
     const navigate = useNavigate();
     const toggletheme = () => {
         setTheme(theme === "dark" ? "light" : "dark");
     };
+
+    //State
+    const [email, setemail] = useState<string>("");
+    const [password, setpassword] = useState<string>("");
+
+    //Store
+    const { userlogin, loadinglogin } = useAuthStore();
+    
     return (
         <div className="flex min-h-screen w-full items-center justify-center p-4">
             <Card className="w-full max-w-md shadow-lg">
@@ -35,19 +47,23 @@ export const Login = () => {
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="grid gap-4">
-                    <div className="grid gap-2">
-                        <Label htmlFor="email">Email</Label>
-                        <Input id="email" type="email" placeholder="example@gmail.com" className="h-10" />
-                    </div>
-                    <div className="grid gap-2">
-                        <div className="flex items-center justify-between">
-                            <Label htmlFor="password">Password</Label>
-                            <a href="#" className="text-xs text-primary hover:underline underline-offset-4">
-                                Forgot password?
-                            </a>
+                    <Field>
+                        <div className="grid gap-2">
+                            <Label htmlFor="email">Email</Label>
+                            <Input id="email" type="email" placeholder="example@gmail.com" value={email} onChange={(e) => setemail(e.target.value)} className="h-10" />
                         </div>
-                        <Input id="password" type="password" className="h-10" placeholder="Enter Password" />
-                    </div>
+                    </Field>
+                    <Field>
+                        <div className="grid gap-2">
+                            <div className="flex items-center justify-between">
+                                <Label htmlFor="password">Password</Label>
+                                <a href="#" className="text-xs text-primary hover:underline underline-offset-4">
+                                    Forgot password?
+                                </a>
+                            </div>
+                            <Input id="password" type="password" className="h-10" placeholder="Enter Password" value={password} onChange={(e) => setpassword(e.target.value)} />
+                        </div>
+                    </Field>
                 </CardContent>
                 <CardFooter className="flex flex-col gap-4">
                     <Button className="w-full h-10 font-medium group">
@@ -60,12 +76,12 @@ export const Login = () => {
                             Sign up
                         </Link>
                     </p>
-                    <div className="relative  my-4 w-full">
+                    <div className="relative my-4 w-full">
                         <div className="absolute inset-0 flex items-center">
                             <span className="w-full border-t border-slate-200" />
                         </div>
                         <div className="relative flex justify-center text-xs uppercase">
-                            <span className="bg-background rounded-lg px-2 text-muted-foreground">
+                            <span className="bg-white dark:bg-card px-2 text-muted-foreground">
                                 Or continue with
                             </span>
                         </div>
