@@ -19,10 +19,13 @@ import { toast, Toaster } from "sonner";
 export const Signup = () => {
     //Theme
     const { theme, setTheme } = useTheme();
-    const navigate = useNavigate();
     const toggletheme = () => {
         setTheme(theme === "dark" ? "light" : "dark");
     };
+
+    //Navigation
+    const navigate = useNavigate();
+
 
     //State
     const [username, setusername] = useState<string>("");

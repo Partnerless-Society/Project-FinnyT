@@ -5,7 +5,6 @@ import {
     Moon,
     BotMessageSquare,
     LogOut,
-    User2Icon,
     Chrome,
     Github
 } from "lucide-react";
@@ -29,9 +28,10 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useTheme } from "@/components/ui/themeprovider";
 import { useAuthStore } from "@/store/authstore";
+import { toast } from "sonner";
 
 const navItems = [
-    { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
+    { title: "Dashboard", url: "/app/dashboard", icon: LayoutDashboard },
     { title: "Agenting", url: "/agent", icon: BotMessageSquare },
 
 ];
@@ -43,9 +43,31 @@ export const Sidebarrrender = () => {
         setTheme(theme === "dark" ? "light" : "dark");
     };
 
-    //
-    const { name, email, type } = useAuthStore();
+    //Navigation
+    const navigate = useNavigate();
 
+    //Store
+    const { name, email, type, userlogout } = useAuthStore();
+
+    const handlelogout = async () => {
+        try {
+            const result = await userlogout();
+            if (result.success) {
+                toast.success(result.message);
+                navigate("/login")
+            }
+        }
+        catch (err: unknown) {
+            if (err instanceof Error) {
+
+                const axiosError = err as any;
+                const error = axiosError.response?.data?.message || err.message;
+                toast.error(error);
+            } else {
+                toast.error("An unexpected error occurred.");
+            }
+        }
+    }
     return (
         <SidebarProvider defaultOpen={false}>
             <Sidebar collapsible="icon" variant="floating">
@@ -88,11 +110,11 @@ export const Sidebarrrender = () => {
                                             {(() => {
                                                 switch (type) {
                                                     case "finnyT":
-                                                        return name?.substring(0,1).toUpperCase();
+                                                        return name?.substring(0, 1).toUpperCase();
                                                     case "google":
-                                                        return <Chrome/>;
+                                                        return <Chrome />;
                                                     case "guest":
-                                                        return <Github/>;
+                                                        return <Github />;
                                                 }
                                             })()}
                                         </AvatarFallback>
@@ -106,7 +128,7 @@ export const Sidebarrrender = () => {
                             <DropdownMenuContent side="right" align="end" className="w-40">
                                 <DropdownMenuLabel>{name} </DropdownMenuLabel>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem >
+                                <DropdownMenuItem onClick={handlelogout} >
                                     <LogOut className="mr-2 h-4 w-4 text-red-600" />
                                     Logout
                                 </DropdownMenuItem>

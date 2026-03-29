@@ -7,7 +7,7 @@ export const authapi = {
         name: string,
         email: string,
         password: string,
-        confirmpassword : string
+        confirmpassword: string
     ): Promise<authreturn> => {
         const response = await Server.post("/user/api/signup", {
             name,
@@ -28,8 +28,12 @@ export const authapi = {
         })
         return response.data;
     },
-    userfetch : async () : Promise<authuserinfo> => {
-        const response  = await Server.get("/user/api/userinfo");
+    userfetch: async (): Promise<authuserinfo> => {
+        const response = await Server.get("/user/api/userinfo");
+        return response.data;
+    },
+    userlogout: async (): Promise<authreturn> => {
+        const response = await Server.post("/user/api/logout");
         return response.data;
     }
 }

@@ -7,6 +7,7 @@ import { useAuthStore } from "@/store/authstore";
 
 export const Dashboard = () => {
 
+    //Store
     const {name, email , id, type} = useAuthStore();
 
     return (

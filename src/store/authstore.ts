@@ -56,29 +56,43 @@ export const useAuthStore = create<authcreate>((set) => ({
         }
     },
     userfetch: async () => {
+        set({ loadinguser: true });
         try {
-            set({ loadinguser: true })
             const result = await authapi.userfetch();
             set({
                 email: result.data.email,
                 name: result.data.name,
                 id: result.data.id,
                 type: result.data.type,
-                loadinguser: false
-            })
-        }
-        catch (err: unknown) {
+            });
+        } catch (err: unknown) {
             set({
                 id: null,
                 name: null,
                 email: null,
                 type: null,
-                loadinguser : false
-            })
+            });
+        
+        } finally {
+            set({ loadinguser: false });
+        }
+    },
+    userlogout: async () => {
+        try {
+            const result = await authapi.userlogout();
+            set({
+                id: null,
+                name: null,
+                email: null,
+                type: null,
+            });
+            return result;
+        }
+        catch (err: unknown) {
             throw err;
         }
-        finally {
-            set({ loadinguser: false })
+        finally{
+            set({ loadinguser: false });
         }
     }
 }))

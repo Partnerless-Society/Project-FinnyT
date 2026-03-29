@@ -30,5 +30,6 @@ export interface authcreate {
         email: string,
         password: string
     ) => Promise<authreturn>,
-    userfetch: () => Promise<void>
+    userfetch: () => Promise<void>,
+    userlogout : () => Promise<authreturn>
 }

@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/chart"
 import { useAuthStore } from "@/store/authstore"
 
+//Cnfigurations
 const chartData = [
     { month: "January", revenue: 186, income: 80, totalbudget: 300 },
     { month: "February", revenue: 305, income: 200, totalbudget: 300 },
@@ -49,6 +50,7 @@ const chartConfig = {
 
 export function DashboardChart() {
 
+    //Store
     const {name, email , id, type} = useAuthStore();
 
     return (

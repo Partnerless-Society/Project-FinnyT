@@ -19,6 +19,9 @@ export const Home = () => {
     //Navigation
     const navigate = useNavigate();
 
+    //Store
+    const { id, userfetch } = useAuthStore();
+
     //States
     const homeRef = useRef<HTMLDivElement | null>(null);
     const toolref = useRef<HTMLDivElement | null>(null);
@@ -27,21 +30,13 @@ export const Home = () => {
     const reviewRef = useRef<HTMLDivElement | null>(null);
     const [menutoggle, setmenutoggle] = useState<boolean>(false);
     const [showScrollTop, setShowScrollTop] = useState(false);
-    
 
-    //Store
-    const { id , userfetch } = useAuthStore();
-    
-    useEffect(() => {
-        if (!id) {
-            userfetch();
-        }
-    }, [id, userfetch]);
 
     //Function
     const scrollTo = (ref: React.RefObject<HTMLDivElement | null>) => {
         ref.current?.scrollIntoView({ behavior: "smooth" });
     };
+    
     useEffect(() => {
         const handleScroll = () => {
             setShowScrollTop(window.scrollY > 300);
@@ -55,6 +50,9 @@ export const Home = () => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, [menutoggle]);
 
+    useEffect(() => {
+        userfetch();
+    }, []);
 
     return (
         <>
@@ -89,7 +87,7 @@ export const Home = () => {
                     <Button className="rounded-full" variant="outline" onClick={toggletheme}>
                         {theme === "light" ? <Sun /> : <Moon />}
                     </Button>
-                    {id ? <Button onClick={() => navigate("/dashboard")}>Dashboard</Button> : <Button onClick={() => navigate("/signup")}>SignUp</Button>}
+                    {id ? <Button onClick={() => navigate("/app/dashboard")}>Dashboard</Button> : <Button onClick={() => navigate("/signup")}>SignUp</Button>}
                 </div>
                 <div className="md:hidden" onClick={() => setmenutoggle(prev => !prev)}>
                     {menutoggle ? <X /> : <Menu />}
@@ -112,7 +110,7 @@ export const Home = () => {
                             <Button className="rounded-full" variant="outline" onClick={toggletheme}>
                                 {theme === "light" ? <Sun /> : <Moon />}
                             </Button>
-                            {id ? <Button onClick={() => navigate("/dashboard")}>Dashboard</Button> : <Button onClick={() => navigate("/signup")}>SignUp</Button>}
+                            {id ? <Button onClick={() => navigate("/app/dashboard")}>Dashboard</Button> : <Button onClick={() => navigate("/signup")}>SignUp</Button>}
                         </motion.div>
                     )}
                 </AnimatePresence>

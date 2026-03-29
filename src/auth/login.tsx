@@ -20,17 +20,20 @@ import { toast, Toaster } from "sonner";
 export const Login = () => {
     //Theme
     const { theme, setTheme } = useTheme();
-    const navigate = useNavigate();
     const toggletheme = () => {
         setTheme(theme === "dark" ? "light" : "dark");
     };
+
+    //Navigation
+    const navigate = useNavigate();
+
 
     //State
     const [useremail, setuseremail] = useState<string>("");
     const [password, setpassword] = useState<string>("");
 
     //Store
-    const { userlogin, loadinglogin, id } = useAuthStore();
+    const { userlogin, loadinglogin } = useAuthStore();
 
     //Function
     const login = async () => {
@@ -39,7 +42,7 @@ export const Login = () => {
             if (data.success) {
                 toast.success(data.message)
                 setTimeout(() => {
-                    navigate("/dashboard", { replace: true })
+                    navigate("/app/dashboard", { replace: true })
                 }, 2000);
             }
         }
@@ -54,10 +57,7 @@ export const Login = () => {
             }
         }
     }
-    if(id){
 
-    }
-    
     return (
         <>
             < Toaster position="top-right" />
