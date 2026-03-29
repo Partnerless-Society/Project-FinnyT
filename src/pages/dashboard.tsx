@@ -2,15 +2,18 @@ import { Button } from "@/components/ui/button"
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { BanknoteArrowDown, Sparkle, Sparkles, TrendingUp, Wallet } from "lucide-react"
 import { DashboardChart } from "./charts/areachart"
-import { FinancialDonutChart } from "./charts/piechart"
 import { motion } from "framer-motion";
+import { useAuthStore } from "@/store/authstore";
 
 export const Dashboard = () => {
+
+    const {name, email , id, type} = useAuthStore();
+
     return (
         <div className="flex flex-col gap-3">
             <div className="flex flex-col gap-1">
                 <h1 className="text-4xl font-medium">Dashboard Overview</h1>
-                <p className="text-medium text-muted-foreground">Welcome Narihito.</p>
+                <p className="text-medium text-muted-foreground">Welcome {name}!</p>
             </div>
             <div className="flex justify-start">
                 <Button className="rounded-lg"><Sparkles /> Ai Insights</Button>
@@ -58,9 +61,9 @@ export const Dashboard = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.5 }}
                 transition={{ duration: 0.5 }}
-                className="flex max-md:flex-col gap-3 w-full">
+                className="w-full">
                 <DashboardChart />
-                <FinancialDonutChart />
+                
             </motion.div>
         </div>
     )

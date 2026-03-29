@@ -30,7 +30,7 @@ export const Login = () => {
     const [password, setpassword] = useState<string>("");
 
     //Store
-    const { userlogin, loadinglogin } = useAuthStore();
+    const { userlogin, loadinglogin, id } = useAuthStore();
 
     //Function
     const login = async () => {
@@ -38,6 +38,9 @@ export const Login = () => {
             const data = await userlogin(useremail, password);
             if (data.success) {
                 toast.success(data.message)
+                setTimeout(() => {
+                    navigate("/dashboard", { replace: true })
+                }, 2000);
             }
         }
         catch (err: unknown) {
@@ -45,16 +48,19 @@ export const Login = () => {
 
                 const axiosError = err as any;
                 const error = axiosError.response?.data?.message || err.message;
-
                 toast.error(error);
             } else {
                 toast.error("An unexpected error occurred.");
             }
         }
     }
+    if(id){
+
+    }
+    
     return (
         <>
-            <Toaster position="top-right" />
+            < Toaster position="top-right" />
             <div className="flex min-h-screen w-full items-center justify-center p-4">
                 <Card className="w-full max-w-md shadow-lg">
                     <CardHeader className="space-y-1 text-center">

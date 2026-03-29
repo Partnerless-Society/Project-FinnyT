@@ -6,14 +6,18 @@ export const useAuthStore = create<authcreate>((set) => ({
     //Variable
     loadingsignup: false,
     loadinglogin: false,
+    loadinguser: true,
+    id: null,
+    name: null,
+    email: null,
+    type: null,
 
-    
     //Function
     usersignup: async (
         name: string,
         email: string,
         password: string,
-        confirmpassword : string
+        confirmpassword: string
     ) => {
         try {
             set({ loadingsignup: true });
@@ -49,6 +53,32 @@ export const useAuthStore = create<authcreate>((set) => ({
         }
         finally {
             set({ loadinglogin: false })
+        }
+    },
+    userfetch: async () => {
+        try {
+            set({ loadinguser: true })
+            const result = await authapi.userfetch();
+            set({
+                email: result.data.email,
+                name: result.data.name,
+                id: result.data.id,
+                type: result.data.type,
+                loadinguser: false
+            })
+        }
+        catch (err: unknown) {
+            set({
+                id: null,
+                name: null,
+                email: null,
+                type: null,
+                loadinguser : false
+            })
+            throw err;
+        }
+        finally {
+            set({ loadinguser: false })
         }
     }
 }))

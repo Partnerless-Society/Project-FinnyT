@@ -3,7 +3,11 @@ import {
     LayoutDashboard,
     Sun,
     Moon,
-    BotMessageSquare
+    BotMessageSquare,
+    LogOut,
+    User2Icon,
+    Chrome,
+    Github
 } from "lucide-react";
 import {
     Sidebar,
@@ -20,8 +24,11 @@ import {
     SidebarGroupContent,
     SidebarFooter
 } from "@/components/ui/sidebar";
-import { Link, Outlet } from "react-router-dom";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useTheme } from "@/components/ui/themeprovider";
+import { useAuthStore } from "@/store/authstore";
 
 const navItems = [
     { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
@@ -35,6 +42,9 @@ export const Sidebarrrender = () => {
     const toggletheme = () => {
         setTheme(theme === "dark" ? "light" : "dark");
     };
+
+    //
+    const { name, email, type } = useAuthStore();
 
     return (
         <SidebarProvider defaultOpen={false}>
@@ -69,6 +79,40 @@ export const Sidebarrrender = () => {
                     <SidebarMenuButton onClick={toggletheme}>
                         {theme === "light" ? (<> <Sun /><span>Light</span> </>) : (<> <Moon /><span>Dark</span> </>)}
                     </SidebarMenuButton>
+                    <div className="flex items-center justify-between">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <button className="border-t flex items-center w-full gap-2 py-2 hover:bg-black/15 rounded-lg">
+                                    <Avatar className="shrink-0">
+                                        <AvatarFallback className="bg-accent-foreground font-medium text-white dark:text-black">
+                                            {(() => {
+                                                switch (type) {
+                                                    case "finnyT":
+                                                        return name?.substring(0,1).toUpperCase();
+                                                    case "google":
+                                                        return <Chrome/>;
+                                                    case "guest":
+                                                        return <Github/>;
+                                                }
+                                            })()}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                    <div className="flex flex-col text-left truncate mr-5">
+                                        <span className="text-sm font-medium">{name}</span>
+                                        <span className="text-xs text-muted-foreground">{email}</span>
+                                    </div>
+                                </button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent side="right" align="end" className="w-40">
+                                <DropdownMenuLabel>{name} </DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem >
+                                    <LogOut className="mr-2 h-4 w-4 text-red-600" />
+                                    Logout
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
                 </SidebarFooter>
             </Sidebar>
             <SidebarInset>

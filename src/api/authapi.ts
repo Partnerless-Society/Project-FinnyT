@@ -1,5 +1,5 @@
 import { Server } from "@/config/axiosconfig";
-import type { authreturn } from "@/types/authtype";
+import type { authreturn, authuserinfo } from "@/types/authtype";
 
 export const authapi = {
     //Signup
@@ -26,6 +26,10 @@ export const authapi = {
             email,
             password
         })
+        return response.data;
+    },
+    userfetch : async () : Promise<authuserinfo> => {
+        const response  = await Server.get("/user/api/userinfo");
         return response.data;
     }
 }

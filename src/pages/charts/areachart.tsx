@@ -15,6 +15,7 @@ import {
     ChartTooltip,
     ChartTooltipContent,
 } from "@/components/ui/chart"
+import { useAuthStore } from "@/store/authstore"
 
 const chartData = [
     { month: "January", revenue: 186, income: 80, totalbudget: 300 },
@@ -23,6 +24,12 @@ const chartData = [
     { month: "April", revenue: 73, income: 190, totalbudget: 300 },
     { month: "May", revenue: 209, income: 130, totalbudget: 300 },
     { month: "June", revenue: 214, income: 140, totalbudget: 300 },
+    { month: "July", revenue: 214, income: 140, totalbudget: 300 },
+    { month: "August", revenue: 214, income: 140, totalbudget: 300 },
+    { month: "September", revenue: 214, income: 140, totalbudget: 300 },
+    { month: "October", revenue: 214, income: 140, totalbudget: 300 },
+    { month: "November", revenue: 214, income: 140, totalbudget: 300 },
+    { month: "December", revenue: 214, income: 140, totalbudget: 300 },
 ]
 
 const chartConfig = {
@@ -41,13 +48,22 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function DashboardChart() {
+
+    const {name, email , id, type} = useAuthStore();
+
     return (
         <Card className="flex flex-col w-full">
-            <CardHeader>
-                <CardTitle>Financial Analytics</CardTitle>
+            <CardHeader className="flex flex-row items-center justify-between">                <CardTitle>Financial Analytics</CardTitle>
                 <CardDescription>
                     Showing total income and revenue for the last 6 months.
                 </CardDescription>
+                <select
+                    className="border rounded p-2 text-sm bg-card"
+                >
+                    <option value={2024}>2024</option>
+                    <option value={2025}>2025</option>
+                    <option value={2026}>2026</option>
+                </select>
             </CardHeader>
             <CardContent>
                 <ChartContainer config={chartConfig}>
@@ -105,7 +121,7 @@ export function DashboardChart() {
                             Showing Finantials Analytics for each month
                         </div>
                         <div className="flex items-center gap-2 leading-none text-muted-foreground">
-                            Showing Details Of Narihito's.
+                            Showing Details Of {name}'s.
                         </div>
                     </div>
                 </div>

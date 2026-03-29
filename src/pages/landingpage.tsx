@@ -7,6 +7,7 @@ import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader,
 import { motion, AnimatePresence } from "framer-motion";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "@/store/authstore";
 
 export const Home = () => {
     //Theme
@@ -26,6 +27,16 @@ export const Home = () => {
     const reviewRef = useRef<HTMLDivElement | null>(null);
     const [menutoggle, setmenutoggle] = useState<boolean>(false);
     const [showScrollTop, setShowScrollTop] = useState(false);
+    
+
+    //Store
+    const { id , userfetch } = useAuthStore();
+    
+    useEffect(() => {
+        if (!id) {
+            userfetch();
+        }
+    }, [id, userfetch]);
 
     //Function
     const scrollTo = (ref: React.RefObject<HTMLDivElement | null>) => {
@@ -78,7 +89,7 @@ export const Home = () => {
                     <Button className="rounded-full" variant="outline" onClick={toggletheme}>
                         {theme === "light" ? <Sun /> : <Moon />}
                     </Button>
-                    <Button onClick={() => navigate("/signup")}>SignUp</Button>
+                    {id ? <Button onClick={() => navigate("/dashboard")}>Dashboard</Button> : <Button onClick={() => navigate("/signup")}>SignUp</Button>}
                 </div>
                 <div className="md:hidden" onClick={() => setmenutoggle(prev => !prev)}>
                     {menutoggle ? <X /> : <Menu />}
@@ -101,7 +112,7 @@ export const Home = () => {
                             <Button className="rounded-full" variant="outline" onClick={toggletheme}>
                                 {theme === "light" ? <Sun /> : <Moon />}
                             </Button>
-                            <Button onClick={() => navigate("/signup")}>SignUp</Button>
+                            {id ? <Button onClick={() => navigate("/dashboard")}>Dashboard</Button> : <Button onClick={() => navigate("/signup")}>SignUp</Button>}
                         </motion.div>
                     )}
                 </AnimatePresence>
