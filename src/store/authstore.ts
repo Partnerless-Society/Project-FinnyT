@@ -6,7 +6,7 @@ export const useAuthStore = create<authcreate>((set) => ({
     //Variable
     loadingsignup: false,
     loadinglogin: false,
-    loadinguser: true,
+    loadinguser: false,
     id: null,
     name: null,
     email: null,

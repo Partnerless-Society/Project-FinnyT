@@ -51,14 +51,17 @@ const chartConfig = {
 export function DashboardChart() {
 
     //Store
-    const {name, email , id, type} = useAuthStore();
+    const { name, email, id, type } = useAuthStore();
 
     return (
         <Card className="flex flex-col w-full">
-            <CardHeader className="flex flex-row items-center justify-between">                <CardTitle>Financial Analytics</CardTitle>
-                <CardDescription>
-                    Showing total income and revenue for the last 6 months.
-                </CardDescription>
+            <CardHeader className="flex flex-row items-center justify-between">
+                <div className="flex flex-col gap-2">
+                    <CardTitle>Financial Analytics</CardTitle>
+                    <CardDescription>
+                        Showing total income and revenue for the last 6 months.
+                    </CardDescription>
+                </div>
                 <select
                     className="border rounded p-2 text-sm bg-card"
                 >

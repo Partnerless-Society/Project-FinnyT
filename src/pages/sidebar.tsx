@@ -33,7 +33,6 @@ import { toast } from "sonner";
 const navItems = [
     { title: "Dashboard", url: "/app/dashboard", icon: LayoutDashboard },
     { title: "Agenting", url: "/agent", icon: BotMessageSquare },
-
 ];
 
 export const Sidebarrrender = () => {
@@ -54,7 +53,7 @@ export const Sidebarrrender = () => {
             const result = await userlogout();
             if (result.success) {
                 toast.success(result.message);
-                navigate("/login")
+                navigate("/login", {replace : true})
             }
         }
         catch (err: unknown) {
@@ -138,7 +137,7 @@ export const Sidebarrrender = () => {
                 </SidebarFooter>
             </Sidebar>
             <SidebarInset>
-                <div className="bg-background fixed py-2 px-3 top-0 left-0 w-full flex flex-row items-center gap-3 border-b md:hidden ">
+                <div className="z-50 bg-background fixed py-2 px-3 top-0 left-0 w-full flex flex-row items-center gap-3 border-b md:hidden ">
                     <SidebarTrigger className="md:hidden" />
                     <h1 className="text-xl font-bold">FinnyT</h1>
                 </div>
