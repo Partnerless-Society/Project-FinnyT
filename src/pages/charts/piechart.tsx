@@ -17,28 +17,34 @@ import {
     ChartTooltipContent,
 } from "@/components/ui/chart"
 import { useAuthStore } from "@/store/authstore"
+
 const chartData = [
-    { category: "salary", amount: 800, fill: "var(--color-salary)" },
-    { category: "freelance", amount: 300, fill: "var(--color-freelance)" },
-    { category: "investment", amount: 150, fill: "var(--color-investment)" },
+    { category: "food", amount: 800, fill: "var(--color-food)" },
+    { category: "transport", amount: 300, fill: "var(--color-transport)" },
+    { category: "work", amount: 150, fill: "var(--color-work)" },
+    { category: "other", amount: 500, fill: "var(--color-other)" },
 ]
 
 const chartConfig = {
     amount: {
         label: "Amount",
     },
-    salary: {
-        label: "Salary",
+    food: {
+        label: "Food",
         color: "var(--chart-1)",
     },
-    freelance: {
-        label: "Freelance",
+    transport: {
+        label: "Transport",
         color: "var(--chart-2)",
     },
-    investment: {
-        label: "Investment",
+    work: {
+        label: "Work",
         color: "var(--chart-3)",
     },
+    other: {
+        label : "Other",
+        color : "var(--chart-4)"
+    }
 } satisfies ChartConfig
 
 
@@ -55,7 +61,7 @@ export function TotalRevenueChart() {
         <Card className="flex flex-col w-full">
             <CardHeader className="items-center pb-0">
                 <CardTitle>Total Income</CardTitle>
-                <CardDescription>Revenue Breakdown</CardDescription>
+                <CardDescription>Total Income For Each Categories.</CardDescription>
             </CardHeader>
             <CardContent className="flex-1 pb-0">
                 <ChartContainer
@@ -110,7 +116,6 @@ export function TotalRevenueChart() {
             <CardFooter className="flex-col gap-2 text-sm">
                 <div className="flex items-center gap-2 font-medium leading-none">
                     Showing Financials Revenue Of {name}'s
-
                 </div>
                 <div className="leading-none text-muted-foreground">
                     Showing total revenue from all sources

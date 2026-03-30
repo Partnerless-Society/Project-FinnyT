@@ -6,7 +6,8 @@ import {
     BotMessageSquare,
     LogOut,
     Chrome,
-    Github
+    Github,
+    Receipt
 } from "lucide-react";
 import {
     Sidebar,
@@ -32,7 +33,8 @@ import { toast } from "sonner";
 
 const navItems = [
     { title: "Dashboard", url: "/app/dashboard", icon: LayoutDashboard },
-    { title: "Agenting", url: "/agent", icon: BotMessageSquare },
+    { title: "Tracker", url: "/app/track", icon: Receipt},
+    { title: "Agenting", url: "/app/agent", icon: BotMessageSquare },
 ];
 
 export const Sidebarrrender = () => {
@@ -53,7 +55,7 @@ export const Sidebarrrender = () => {
             const result = await userlogout();
             if (result.success) {
                 toast.success(result.message);
-                navigate("/login", {replace : true})
+                navigate("/login", { replace: true })
             }
         }
         catch (err: unknown) {

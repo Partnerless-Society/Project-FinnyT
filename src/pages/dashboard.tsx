@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { BanknoteArrowDown, Calendar, Sparkles, TrendingDown, Wallet } from "lucide-react"
+import { BanknoteArrowDown, Calendar, Sparkle, Sparkles, TrendingDown, Wallet, X } from "lucide-react"
 import { DashboardChart } from "./charts/areachart"
 import { AnimatePresence, motion } from "framer-motion";
 import { useAuthStore } from "@/store/authstore";
@@ -51,7 +51,7 @@ export const Dashboard = () => {
                 <p className="text-medium text-muted-foreground">Welcome {name}!</p>
             </div>
             <div className="flex justify-start">
-                <Button onClick={Aianalytics} className="rounded-lg"><Sparkles /> Ai Insights</Button>
+                <Button disabled={loadingai} onClick={Aianalytics} className="rounded-lg"><Sparkle className={loadingai ? "animate-spin" : ""} /> {loadingai ? "Analysing..." : "Ai Insights"}</Button>
             </div>
             <AnimatePresence mode="wait">
                 {loadingai ? (
@@ -73,12 +73,11 @@ export const Dashboard = () => {
                             <Skeleton className="h-4 w-full" />
                             <Skeleton className="h-4 w-full" />
                         </section>
-
                     </motion.div>
                 ) : aianalyse ? (
                     <motion.div
                         key="response"
-                        className="p-4 rounded-xl border text-sm leading-relaxed"
+                        className="relative p-4 rounded-xl border text-sm leading-relaxed"
                     >
                         <div className="flex text-[15px] items-center gap-2 mb-2  font-semibold">
                             <Sparkles size={14} /> AI Analysis

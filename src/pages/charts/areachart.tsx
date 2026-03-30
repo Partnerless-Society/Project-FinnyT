@@ -16,26 +16,27 @@ import {
     ChartTooltipContent,
 } from "@/components/ui/chart"
 import { useAuthStore } from "@/store/authstore"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-//Cnfigurations
+//Configurations
 const chartData = [
-    { month: "January", revenue: 186, income: 80, totalbudget: 300 },
-    { month: "February", revenue: 305, income: 200, totalbudget: 300 },
-    { month: "March", revenue: 237, income: 120, totalbudget: 300 },
-    { month: "April", revenue: 73, income: 190, totalbudget: 300 },
-    { month: "May", revenue: 209, income: 130, totalbudget: 300 },
-    { month: "June", revenue: 214, income: 140, totalbudget: 300 },
-    { month: "July", revenue: 214, income: 140, totalbudget: 300 },
-    { month: "August", revenue: 214, income: 140, totalbudget: 300 },
-    { month: "September", revenue: 214, income: 140, totalbudget: 300 },
-    { month: "October", revenue: 214, income: 140, totalbudget: 300 },
-    { month: "November", revenue: 214, income: 140, totalbudget: 300 },
-    { month: "December", revenue: 214, income: 140, totalbudget: 300 },
+    { month: "January", outcome: 186, income: 80, totalbudget: 300 },
+    { month: "February", outcome: 305, income: 200, totalbudget: 300 },
+    { month: "March", outcome: 237, income: 120, totalbudget: 300 },
+    { month: "April", outcome: 73, income: 190, totalbudget: 300 },
+    { month: "May", outcome: 209, income: 130, totalbudget: 300 },
+    { month: "June", outcome: 214, income: 140, totalbudget: 300 },
+    { month: "July", outcome: 214, income: 140, totalbudget: 300 },
+    { month: "August", outcome: 214, income: 140, totalbudget: 300 },
+    { month: "September", outcome: 214, income: 140, totalbudget: 300 },
+    { month: "October", outcome: 214, income: 140, totalbudget: 300 },
+    { month: "November", outcome: 214, income: 140, totalbudget: 300 },
+    { month: "December", outcome: 214, income: 140, totalbudget: 300 },
 ]
 
 const chartConfig = {
-    revenue: {
-        label: "Revenue",
+    outcome: {
+        label: "Outcome",
         color: "var(--chart-1)",
     },
     income: {
@@ -59,16 +60,17 @@ export function DashboardChart() {
                 <div className="flex flex-col gap-2">
                     <CardTitle>Financial Analytics</CardTitle>
                     <CardDescription>
-                        Showing total income and revenue for the last 6 months.
+                        Showing total income and outcome for the last 6 months.
                     </CardDescription>
                 </div>
-                <select
-                    className="border rounded p-2 text-sm bg-card"
-                >
-                    <option value={2024}>2024</option>
-                    <option value={2025}>2025</option>
-                    <option value={2026}>2026</option>
-                </select>
+                <Select>
+                    <SelectTrigger>
+                        <SelectValue placeholder="2026" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="2026">2026</SelectItem>
+                    </SelectContent>
+                </Select>
             </CardHeader>
             <CardContent>
                 <ChartContainer config={chartConfig}>
@@ -92,6 +94,14 @@ export function DashboardChart() {
                             cursor={false}
                             content={<ChartTooltipContent indicator="dot" />}
                         />
+                         <Area
+                            dataKey="totalbudget"
+                            type="natural"
+                            fill="var(--color-totalbudget)"
+                            fillOpacity={0.4}
+                            stroke="var(--color-totalbudget)"
+                            stackId="a"
+                        />
                         <Area
                             dataKey="income"
                             type="natural"
@@ -101,21 +111,14 @@ export function DashboardChart() {
                             stackId="a"
                         />
                         <Area
-                            dataKey="revenue"
+                            dataKey="outcome"
                             type="natural"
-                            fill="var(--color-revenue)"
+                            fill="var(--color-outcome)"
                             fillOpacity={0.4}
-                            stroke="var(--color-revenue)"
+                            stroke="var(--color-outcome)"
                             stackId="a"
                         />
-                        <Area
-                            dataKey="totalbudget"
-                            type="natural"
-                            fill="var(--color-totalbudget)"
-                            fillOpacity={0.4}
-                            stroke="var(--color-totalbudget)"
-                            stackId="a"
-                        />
+                       
                     </AreaChart>
                 </ChartContainer>
             </CardContent>

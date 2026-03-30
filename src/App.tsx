@@ -8,6 +8,7 @@ import { Dashboard } from "./pages/dashboard";
 import { Protectedroute } from "./routes/protectedroute";
 import { Errorpage } from "./error/errorpage";
 import { Publicroute } from "./routes/publicroute";
+import { Tracker } from "./pages/tracker";
 
 function App() {
 
@@ -25,9 +26,10 @@ function App() {
           <Route element={<Protectedroute />} >
             <Route path="/app" element={<Sidebarrrender />}>
               <Route path="dashboard" element={<Dashboard />} />
+              <Route path="track" element={<Tracker/>} />
             </Route>
           </Route>
-          
+
           <Route path="*" element={<Errorpage />} />
         </Routes>
       </ThemeProvider>
