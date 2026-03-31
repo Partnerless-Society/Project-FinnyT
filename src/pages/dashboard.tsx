@@ -1,12 +1,13 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { BanknoteArrowDown, Calendar, Sparkle, Sparkles, TrendingDown, Wallet, X } from "lucide-react"
-import { DashboardChart } from "./charts/areachart"
+import { BanknoteArrowDown, BanknoteArrowUp, Calendar, Sparkle, Sparkles, TrendingDown, TrendingUp, Wallet } from "lucide-react"
+import { DashboardChart } from "./charts/Analyticschart"
 import { AnimatePresence, motion } from "framer-motion";
 import { useAuthStore } from "@/store/authstore";
 import { useDataStore } from "@/store/datastore";
 import { useEffect, useState } from "react";
-import { TotalRevenueChart } from "./charts/piechart";
+import { TotalIncomeChart } from "./charts/incomechart";
+import { TotalOutcomeChart } from "./charts/outcomechart";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAiStore } from "@/store/aistore";
 import DOMPurify from "dompurify"
@@ -15,10 +16,15 @@ export const Dashboard = () => {
 
     //Variable
     const [aianalyse, setaianalyse] = useState<string>("");
+
     //Store
-    const { name, email, id, type } = useAuthStore();
-    const { fetchdata, total, income, outcome, loadingdata } = useDataStore();
+    const { name, id } = useAuthStore();
+    const { fetchdata, income, outcome, loadingdata } = useDataStore();
     const { Aianalyse, loadingai } = useAiStore();
+
+    //Variable
+    const total : number = (Math.abs((income || 0) + (outcome || 0)));
+    const net : number = (Math.abs((income || 0) - (outcome || 0)));
 
     //Functions
     useEffect(() => {
@@ -27,7 +33,7 @@ export const Dashboard = () => {
 
     const Aianalytics = async () => {
         try {
-            const data = await Aianalyse(total ?? 0, income ?? 0, outcome ?? 0);
+            const data = await Aianalyse(total, income ?? 0, outcome ?? 0 , net);
             if (data.success) {
                 setaianalyse(data.data);
             }
@@ -98,10 +104,10 @@ export const Dashboard = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.5 }}
                 transition={{ duration: 0.5 }}
-                className="grid grid-cols-3 max-md:grid-cols-1 gap-3"
+                className="grid grid-cols-2 max-md:grid-cols-1 gap-3"
             >
                 {loadingdata ? (
-                    Array.from({ length: 3 }).map((_, i) => (
+                    Array.from({ length: 4 }).map((_, i) => (
                         <Card key={i} className="h-40 flex flex-col justify-between">
                             <CardHeader className="flex flex-row items-center justify-between space-y-0">
                                 <Skeleton className="h-6 w-1/2" />
@@ -117,15 +123,22 @@ export const Dashboard = () => {
                     <>
                         <Card>
                             <CardHeader className="flex flex-row items-center justify-between space-y-0">
-                                <CardTitle className="text-xl font-bold">Total Budget Usage</CardTitle>
-                                <Wallet className="text-blue-600" />
+                                <CardTitle className="text-xl font-bold">Total Budget</CardTitle>
+                                <Wallet className="text-cyan-600" />
                             </CardHeader>
                             <CardContent>
-                                <CardTitle className="max-md:text-xl text-2xl font-bold text-blue-600">
-                                    {total ?? 0} Ks
+                                <CardTitle className="max-md:text-xl text-2xl font-bold text-cyan-600">
+                                    {total} Ks
                                 </CardTitle>
                                 <CardDescription className="flex gap-1 mt-2 font-medium">
-                                    <Calendar size={20} />{new Date().toLocaleDateString()}
+                                    <Calendar size={20} className="text-muted-foreground" />
+                                    <span className="text-muted-foreground">
+                                        {new Date().toLocaleDateString('en-GB', {
+                                            day: 'numeric',
+                                            month: 'short',
+                                            year: 'numeric'
+                                        })}
+                                    </span>
                                 </CardDescription>
                             </CardContent>
                         </Card>
@@ -133,14 +146,21 @@ export const Dashboard = () => {
                         <Card>
                             <CardHeader className="flex flex-row items-center justify-between space-y-0">
                                 <CardTitle className="text-xl font-bold">Income</CardTitle>
-                                <BanknoteArrowDown className="text-green-500" />
+                                <BanknoteArrowUp className="text-green-600" />
                             </CardHeader>
                             <CardContent>
-                                <CardTitle className="max-md:text-xl text-2xl font-bold text-green-500">
+                                <CardTitle className="max-md:text-xl text-2xl font-bold text-green-600">
                                     {income ?? 0} Ks
                                 </CardTitle>
                                 <CardDescription className="flex gap-1 mt-2 font-medium">
-                                    <Calendar size={20} />{new Date().toLocaleDateString()}
+                                    <Calendar size={20} className="text-muted-foreground" />
+                                    <span className="text-muted-foreground">
+                                        {new Date().toLocaleDateString('en-GB', {
+                                            day: 'numeric',
+                                            month: 'short',
+                                            year: 'numeric'
+                                        })}
+                                    </span>
                                 </CardDescription>
                             </CardContent>
                         </Card>
@@ -148,28 +168,59 @@ export const Dashboard = () => {
                         <Card>
                             <CardHeader className="flex flex-row items-center justify-between space-y-0">
                                 <CardTitle className="text-xl font-bold">Outcome</CardTitle>
-                                <TrendingDown className="text-orange-600" />
+                                <BanknoteArrowDown className="text-orange-700" />
                             </CardHeader>
                             <CardContent>
-                                <CardTitle className="max-md:text-xl text-2xl font-bold text-orange-600">
+                                <CardTitle className="max-md:text-xl text-2xl font-bold text-orange-700">
                                     - {outcome ?? 0} Ks
                                 </CardTitle>
                                 <CardDescription className="flex gap-1 mt-2 font-medium">
-                                    <Calendar size={20} />{new Date().toLocaleDateString()}
+                                    <Calendar size={20} className="text-muted-foreground" />
+                                    <span className="text-muted-foreground">
+                                        {new Date().toLocaleDateString('en-GB', {
+                                            day: 'numeric',
+                                            month: 'short',
+                                            year: 'numeric'
+                                        })}
+                                    </span>
+                                </CardDescription>
+                            </CardContent>
+                        </Card>
+
+                        <Card >
+                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                                <CardTitle className="text-xl font-bold">NetWorth</CardTitle>
+                                {((income || 0) - (outcome || 0)) < 0 ? <TrendingDown className="text-red-600" /> : <TrendingUp className="text-green-600" />}
+                            </CardHeader>
+                            <CardContent>
+                                <CardTitle className={`max-md:text-xl text-2xl font-bold ${((income || 0) - (outcome || 0)) < 0 ? "text-red-600" : "text-green-600"}`}>
+                                    {((income || 0) - (outcome || 0)) < 0 ? "- " : "+ "}
+                                    {net} Ks
+                                </CardTitle>
+                                <CardDescription className="flex items-center gap-1 mt-2 font-medium">
+                                    <Calendar size={20} className="text-muted-foreground" />
+                                    <span className="text-muted-foreground">
+                                        {new Date().toLocaleDateString('en-GB', {
+                                            day: 'numeric',
+                                            month: 'short',
+                                            year: 'numeric'
+                                        })}
+                                    </span>
                                 </CardDescription>
                             </CardContent>
                         </Card>
                     </>
                 )}
             </motion.div>
+            <DashboardChart />
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.5 }}
                 transition={{ duration: 0.5 }}
                 className="w-full flex max-md:flex-col gap-3">
-                <DashboardChart />
-                <TotalRevenueChart />
+                <TotalIncomeChart />
+                <TotalOutcomeChart />
             </motion.div>
         </div >
     )

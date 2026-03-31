@@ -8,6 +8,7 @@ export interface aicreate {
     Aianalyse : (
         total : number,
         income : number,
-        outcome : number
+        outcome : number,
+        net : number
     ) => Promise<aitype>
 }

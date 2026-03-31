@@ -1,6 +1,3 @@
-"use client"
-
-import * as React from "react"
 import { Label, Pie, PieChart } from "recharts"
 import {
     Card,
@@ -17,13 +14,9 @@ import {
     ChartTooltipContent,
 } from "@/components/ui/chart"
 import { useAuthStore } from "@/store/authstore"
+import { useEffect, useMemo } from "react"
+import { useDataStore } from "@/store/datastore"
 
-const chartData = [
-    { category: "food", amount: 800, fill: "var(--color-food)" },
-    { category: "transport", amount: 300, fill: "var(--color-transport)" },
-    { category: "work", amount: 150, fill: "var(--color-work)" },
-    { category: "other", amount: 500, fill: "var(--color-other)" },
-]
 
 const chartConfig = {
     amount: {
@@ -42,31 +35,49 @@ const chartConfig = {
         color: "var(--chart-3)",
     },
     other: {
-        label : "Other",
-        color : "var(--chart-4)"
+        label: "Other",
+        color: "var(--chart-4)"
     }
 } satisfies ChartConfig
 
 
-export function TotalRevenueChart() {
+export function TotalOutcomeChart() {
     //Store
-    const { name, email, id, type } = useAuthStore();
+    const { name, id } = useAuthStore();
+    const { fetchchartoutcome, outcomechart } = useDataStore();
+
+    //Functions
+    useEffect(() => {
+        fetchchartoutcome(id ?? "")
+    }, [])
 
     //Calculate
-    const totalRevenue = React.useMemo(() => {
+    const chartData = outcomechart.map((element) => (
+        {
+            category: element.category,
+            amount: element.outcome,
+            fill: `var(--color-${element.category.toLowerCase()}`
+        }
+    ))
+
+    const totalRevenue = useMemo(() => {
         return chartData.reduce((acc, curr) => acc + curr.amount, 0)
-    }, [])
+    }, [outcomechart])
+
+
+    const hasData = chartData.length > 0;
+    const emptyData = [{ category: "none", amount: 1, fill: "var(--muted)" }];
 
     return (
         <Card className="flex flex-col w-full">
             <CardHeader className="items-center pb-0">
-                <CardTitle>Total Income</CardTitle>
-                <CardDescription>Total Income For Each Categories.</CardDescription>
+                <CardTitle>Total Outcome</CardTitle>
+                <CardDescription>Total Outcome For Each Categories.</CardDescription>
             </CardHeader>
             <CardContent className="flex-1 pb-0">
                 <ChartContainer
                     config={chartConfig}
-                    className="mx-auto aspect-square max-h-62.5"
+                    className="mx-auto aspect-auto h-62.5"
                 >
                     <PieChart>
                         <ChartTooltip
@@ -74,8 +85,7 @@ export function TotalRevenueChart() {
                             content={<ChartTooltipContent hideLabel />}
                         />
                         <Pie
-                            data={chartData}
-                            dataKey="amount"
+                            data={hasData ? chartData : emptyData} dataKey="amount"
                             nameKey="category"
                             innerRadius={60}
                             strokeWidth={5}
@@ -93,7 +103,7 @@ export function TotalRevenueChart() {
                                                 <tspan
                                                     x={viewBox.cx}
                                                     y={viewBox.cy}
-                                                    className="fill-foreground text-3xl font-bold"
+                                                    className="fill-foreground text-2xl font-bold"
                                                 >
                                                     {totalRevenue.toLocaleString()}
                                                 </tspan>
@@ -115,10 +125,10 @@ export function TotalRevenueChart() {
             </CardContent>
             <CardFooter className="flex-col gap-2 text-sm">
                 <div className="flex items-center gap-2 font-medium leading-none">
-                    Showing Financials Revenue Of {name}'s
+                    Showing Financials Outcomes Of {name}'s
                 </div>
                 <div className="leading-none text-muted-foreground">
-                    Showing total revenue from all sources
+                    Showing total outcomes from all sources
                 </div>
             </CardFooter>
         </Card>

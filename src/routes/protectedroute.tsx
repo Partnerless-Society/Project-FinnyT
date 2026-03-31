@@ -1,20 +1,23 @@
 import { Spinner } from "@/components/ui/spinner";
 import { useAuthStore } from "@/store/authstore";
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Navigate, Outlet } from "react-router-dom";
 
 export const Protectedroute = () => {
-    //Store
     const { loadinguser, id, userfetch } = useAuthStore();
+    const [isChecking, setIsChecking] = useState(true);
 
-    //Function
     useEffect(() => {
-        if (!id) {
-            userfetch();
-        }
-    }, [id , userfetch]); 
+        const checkAuth = async () => {
+            if (!id) {
+                await userfetch();
+            }
+            setIsChecking(false);
+        };
+        checkAuth();
+    }, [id, userfetch]);
 
-    if (loadinguser) {
+    if (loadinguser || isChecking) {
         return (
             <div className="flex h-screen items-center justify-center">
                 <Spinner className="size-10" />
@@ -22,5 +25,7 @@ export const Protectedroute = () => {
         );
     }
 
-    return id ? <Outlet /> : <Navigate to="/login" replace />;
-}
+    if (!id) return <Navigate to="/login" replace />;
+
+    return <Outlet />;
+};

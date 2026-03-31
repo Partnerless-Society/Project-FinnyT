@@ -30,10 +30,11 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useTheme } from "@/components/ui/themeprovider";
 import { useAuthStore } from "@/store/authstore";
 import { toast } from "sonner";
+import { useDataStore } from "@/store/datastore";
 
 const navItems = [
     { title: "Dashboard", url: "/app/dashboard", icon: LayoutDashboard },
-    { title: "Tracker", url: "/app/track", icon: Receipt},
+    { title: "Tracker", url: "/app/track", icon: Receipt },
     { title: "Agenting", url: "/app/agent", icon: BotMessageSquare },
 ];
 
@@ -49,10 +50,12 @@ export const Sidebarrrender = () => {
 
     //Store
     const { name, email, type, userlogout } = useAuthStore();
+    const { reset } = useDataStore();
 
     const handlelogout = async () => {
         try {
             const result = await userlogout();
+            reset();
             if (result.success) {
                 toast.success(result.message);
                 navigate("/login", { replace: true })

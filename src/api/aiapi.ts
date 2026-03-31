@@ -3,14 +3,16 @@ import type { aitype } from "@/types/aitype";
 
 export const aiapi = {
     aianalyse : async (
-        total : number , 
+        total : number,
         income : number , 
-        outcome : number
+        outcome : number ,
+        net : number
     ) : Promise<aitype> => {
        const response = await Server.post("/ai/api/aianalyse" , {
          total,
          income,
-         outcome
+         outcome,
+         net
        });
        return response.data
     }

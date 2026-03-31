@@ -34,8 +34,8 @@ export const Signup = () => {
     const [confirmpassword, setconfirmpassword] = useState<string>("");
 
     //Store
-    const { usersignup, loadingsignup } = useAuthStore();
-
+    const { usersignup, loadingsignup} = useAuthStore();
+   
     //Function
     const signup = async () => {
         try {

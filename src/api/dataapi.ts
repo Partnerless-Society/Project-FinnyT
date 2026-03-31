@@ -1,13 +1,71 @@
 import { Server } from "@/config/axiosconfig"
-import type { datareturn } from "@/types/datatype"
+import type { datareturn, datareturnchart, datareturnmessage, datareturntrackincomeoutcome } from "@/types/datatype"
 
 export const dataapi = {
-    fetchdata : async (id : string) : Promise<datareturn> => {
-        const response = await Server.get("/data/api/dashboarddata" , {
+    fetchdata: async (
+        id: string
+    ): Promise<datareturn> => {
+        const response = await Server.get("/data/api/dashboarddata", {
+            params: {
+                id
+            }
+        })
+        return response.data
+    },
+    datacreate: async (
+        id: string,
+        type: string,
+        amount: Number,
+        category: string,
+        source: string
+    ): Promise<datareturnmessage> => {
+        const response = await Server.post("/data/api/create", {
+            id,
+            type,
+            amount,
+            category,
+            source
+        })
+        return response.data;
+    },
+    fetchtrackincome: async (
+        id: string
+    ): Promise<datareturntrackincomeoutcome> => {
+        const response = await Server.get("/data/api/fetchtrackincome", {
+            params: {
+                id
+            }
+        })
+        return response.data
+    },
+    fetchtrackoutcome: async (
+        id: string
+    ): Promise<datareturntrackincomeoutcome> => {
+        const response = await Server.get("/data/api/fetchtrackoutcome", {
+            params: {
+                id
+            }
+        })
+        return response.data
+    },
+    fetchchartincome : async (
+        id : string
+    ) : Promise<datareturnchart> => {
+        const response = await Server.get("/data/api/fetchchartincome",{
             params : {
                 id
             }
         })
         return response.data
-    }
+    },
+    fetchchartoutcome : async (
+        id : string
+    ) : Promise<datareturnchart> => {
+        const response = await Server.get("/data/api/fetchchartoutcome",{
+            params : {
+                id
+            }
+        })
+        return response.data
+    },
 }

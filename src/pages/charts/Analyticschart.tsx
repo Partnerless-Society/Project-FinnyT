@@ -73,7 +73,7 @@ export function DashboardChart() {
                 </Select>
             </CardHeader>
             <CardContent>
-                <ChartContainer config={chartConfig}>
+                <ChartContainer className="aspect-auto h-62.5 w-full" config={chartConfig}>
                     <AreaChart
                         accessibilityLayer
                         data={chartData}

@@ -7,14 +7,16 @@ export const useAiStore = create<aicreate>((set) => ({
     Aianalyse: async (
         total: number,
         income: number,
-        outcome: number
+        outcome: number,
+        net : number
     ) => {
         try {
            set({loadingai : true});
            const result = await aiapi.aianalyse(
             total,
             income,
-            outcome
+            outcome,
+            net
            )
            return result;
         }
