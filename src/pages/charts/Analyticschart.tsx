@@ -52,7 +52,11 @@ const chartConfig = {
 export function DashboardChart() {
 
     //Store
-    const { name, email, id, type } = useAuthStore();
+    const { name,
+        email,
+        id,
+        type
+    } = useAuthStore();
 
     return (
         <Card className="flex flex-col w-full">
@@ -94,7 +98,7 @@ export function DashboardChart() {
                             cursor={false}
                             content={<ChartTooltipContent indicator="dot" />}
                         />
-                         <Area
+                        <Area
                             dataKey="totalbudget"
                             type="natural"
                             fill="var(--color-totalbudget)"
@@ -118,7 +122,7 @@ export function DashboardChart() {
                             stroke="var(--color-outcome)"
                             stackId="a"
                         />
-                       
+
                     </AreaChart>
                 </ChartContainer>
             </CardContent>

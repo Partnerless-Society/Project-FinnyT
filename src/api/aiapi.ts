@@ -1,5 +1,5 @@
 import { Server } from "@/config/axiosconfig"
-import type { aitype } from "@/types/aitype";
+import type { aiagent, aitype } from "@/types/aitype";
 
 export const aiapi = {
     aianalyse : async (
@@ -15,5 +15,11 @@ export const aiapi = {
          net
        });
        return response.data
+    },
+    aiagent : async (
+        form : FormData
+    ) : Promise<aiagent> => {
+        const response = await Server.post("/ai/api/aiagent", form);
+        return response.data;
     }
 }

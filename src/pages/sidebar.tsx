@@ -49,7 +49,10 @@ export const Sidebarrrender = () => {
     const navigate = useNavigate();
 
     //Store
-    const { name, email, type, userlogout } = useAuthStore();
+    const { name,
+        email,
+        type,
+        userlogout } = useAuthStore();
     const { reset } = useDataStore();
 
     const handlelogout = async () => {

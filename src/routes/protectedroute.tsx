@@ -4,7 +4,11 @@ import { useEffect, useState } from "react"
 import { Navigate, Outlet } from "react-router-dom";
 
 export const Protectedroute = () => {
-    const { loadinguser, id, userfetch } = useAuthStore();
+    const {
+        loadinguser,
+        id,
+        userfetch 
+    } = useAuthStore();
     const [isChecking, setIsChecking] = useState(true);
 
     useEffect(() => {

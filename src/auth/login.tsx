@@ -19,7 +19,10 @@ import { toast, Toaster } from "sonner";
 
 export const Login = () => {
     //Theme
-    const { theme, setTheme } = useTheme();
+    const {
+        theme,
+        setTheme
+    } = useTheme();
     const toggletheme = () => {
         setTheme(theme === "dark" ? "light" : "dark");
     };
@@ -33,8 +36,11 @@ export const Login = () => {
     const [password, setpassword] = useState<string>("");
 
     //Store
-    const { userlogin, loadinglogin} = useAuthStore();
-   
+    const {
+        userlogin,
+        loadinglogin
+    } = useAuthStore();
+
 
     //Function
     const login = async () => {

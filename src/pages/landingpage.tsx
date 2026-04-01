@@ -11,7 +11,10 @@ import { useAuthStore } from "@/store/authstore";
 
 export const Home = () => {
     //Theme
-    const { theme, setTheme } = useTheme();
+    const { theme,
+        setTheme
+    } = useTheme();
+    
     const toggletheme = () => {
         setTheme(theme === "dark" ? "light" : "dark");
     };
@@ -20,7 +23,10 @@ export const Home = () => {
     const navigate = useNavigate();
 
     //Store
-    const { id, userfetch } = useAuthStore();
+    const {
+        id,
+        userfetch
+    } = useAuthStore();
 
     //States
     const homeRef = useRef<HTMLDivElement | null>(null);
@@ -36,7 +42,7 @@ export const Home = () => {
     const scrollTo = (ref: React.RefObject<HTMLDivElement | null>) => {
         ref.current?.scrollIntoView({ behavior: "smooth" });
     };
-    
+
     useEffect(() => {
         const handleScroll = () => {
             setShowScrollTop(window.scrollY > 300);

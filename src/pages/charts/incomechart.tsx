@@ -43,9 +43,16 @@ const chartConfig = {
 
 export function TotalIncomeChart() {
     //Store
-    const { name, id } = useAuthStore();
-    const { fetchchartincome, incomechart } = useDataStore();
+    const { 
+        name,
+        id
+    } = useAuthStore();
+    const { 
+        fetchchartincome,
+        incomechart
+    } = useDataStore();
 
+    //Function
     useEffect(() => {
         fetchchartincome(id ?? "")
     }, [])

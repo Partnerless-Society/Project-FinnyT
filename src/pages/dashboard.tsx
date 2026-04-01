@@ -18,13 +18,21 @@ export const Dashboard = () => {
     const [aianalyse, setaianalyse] = useState<string>("");
 
     //Store
-    const { name, id } = useAuthStore();
-    const { fetchdata, income, outcome, loadingdata } = useDataStore();
-    const { Aianalyse, loadingai } = useAiStore();
+    const {
+        name,
+        id
+    } = useAuthStore();
+    const { fetchdata,
+        income,
+        outcome,
+        loadingdata } = useDataStore();
+    const {
+        Aianalyse,
+        loadingai } = useAiStore();
 
     //Variable
-    const total : number = (Math.abs((income || 0) + (outcome || 0)));
-    const net : number = (Math.abs((income || 0) - (outcome || 0)));
+    const total: number = (Math.abs((income || 0) + (outcome || 0)));
+    const net: number = (Math.abs((income || 0) - (outcome || 0)));
 
     //Functions
     useEffect(() => {
@@ -33,7 +41,7 @@ export const Dashboard = () => {
 
     const Aianalytics = async () => {
         try {
-            const data = await Aianalyse(total, income ?? 0, outcome ?? 0 , net);
+            const data = await Aianalyse(total, income ?? 0, outcome ?? 0, net);
             if (data.success) {
                 setaianalyse(data.data);
             }
@@ -212,7 +220,14 @@ export const Dashboard = () => {
                     </>
                 )}
             </motion.div>
-            <DashboardChart />
+            <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.5 }}
+                transition={{ duration: 0.5 }}>
+                <DashboardChart />
+
+            </motion.div>
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
                 whileInView={{ opacity: 1, y: 0 }}

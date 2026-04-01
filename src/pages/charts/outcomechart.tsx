@@ -43,8 +43,14 @@ const chartConfig = {
 
 export function TotalOutcomeChart() {
     //Store
-    const { name, id } = useAuthStore();
-    const { fetchchartoutcome, outcomechart } = useDataStore();
+    const {
+        name,
+        id
+    } = useAuthStore();
+    const {
+        fetchchartoutcome,
+        outcomechart
+    } = useDataStore();
 
     //Functions
     useEffect(() => {

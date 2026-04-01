@@ -2,6 +2,7 @@ import { Server } from "@/config/axiosconfig"
 import type { datareturn, datareturnchart, datareturnmessage, datareturntrackincomeoutcome } from "@/types/datatype"
 
 export const dataapi = {
+    //Fetch
     fetchdata: async (
         id: string
     ): Promise<datareturn> => {
@@ -12,6 +13,7 @@ export const dataapi = {
         })
         return response.data
     },
+    //Create Data
     datacreate: async (
         id: string,
         type: string,
@@ -28,6 +30,7 @@ export const dataapi = {
         })
         return response.data;
     },
+    //Track
     fetchtrackincome: async (
         id: string
     ): Promise<datareturntrackincomeoutcome> => {
@@ -48,6 +51,7 @@ export const dataapi = {
         })
         return response.data
     },
+    //Piechart data
     fetchchartincome : async (
         id : string
     ) : Promise<datareturnchart> => {
