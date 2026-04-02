@@ -1,13 +1,13 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { BanknoteArrowDown, BanknoteArrowUp, Calendar, Sparkle, Sparkles, TrendingDown, TrendingUp, Wallet } from "lucide-react"
-import { DashboardChart } from "./charts/Analyticschart"
+import { DashboardChart } from "../charts/Analyticschart"
 import { AnimatePresence, motion } from "framer-motion";
 import { useAuthStore } from "@/store/authstore";
 import { useDataStore } from "@/store/datastore";
 import { useEffect, useState } from "react";
-import { TotalIncomeChart } from "./charts/incomechart";
-import { TotalOutcomeChart } from "./charts/outcomechart";
+import { TotalIncomeChart } from "../charts/incomechart";
+import { TotalOutcomeChart } from "../charts/outcomechart";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAiStore } from "@/store/aistore";
 import DOMPurify from "dompurify"

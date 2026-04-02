@@ -114,6 +114,7 @@ export const Tracker = () => {
     return (
         <>
             <Toaster position="top-right" />
+            {/*Dialog */}
             <Dialog open={open} onOpenChange={setopen}>
                 <DialogContent className="sm:max-w-106.25">
                     <Tabs>
@@ -196,7 +197,7 @@ export const Tracker = () => {
                             </DialogHeader>
                             <label
                                 htmlFor="fileUpload"
-                                className="w-50 h-50 rounded-lg border border-dotted border-gray-400 mt-4 flex items-center justify-center cursor-pointer"
+                                className="w-50 h-50 rounded-lg border border-double border-gray-400 mt-4 flex items-center justify-center cursor-pointer"
                             >
                                 {file ? (
                                     <img

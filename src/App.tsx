@@ -1,15 +1,19 @@
 import { Route, BrowserRouter, Routes } from "react-router-dom"
-import { Home } from "./pages/landingpage"
+import { Home } from "./pages/landing/landingpage"
 import { ThemeProvider } from "./components/ui/themeprovider"
 import { Login } from "./auth/login";
 import { Signup } from "./auth/signup";
-import { Sidebarrrender } from "./pages/sidebar";
-import { Dashboard } from "./pages/dashboard";
+import { Sidebarrrender } from "./pages/sidebar/sidebar";
+import { Dashboard } from "./pages/dashboard/dashboard";
 import { Protectedroute } from "./routes/protectedroute";
 import { Errorpage } from "./error/errorpage";
-import { Tracker } from "./pages/tracker";
+import { Tracker } from "./pages/dashboard/tracker";
 import { useAuthStore } from "./store/authstore";
 import { useEffect } from "react";
+import { Agenting } from "./pages/dashboard/agenting";
+import { Sidebarrrenderagent } from "./pages/sidebar/agentsidebar";
+import { Emailagent } from "./pages/agenting/emailagent";
+import { GoogleSheetagent } from "./pages/agenting/googlesheetagent";
 
 function App() {
 
@@ -38,6 +42,11 @@ function App() {
             <Route path="/app" element={<Sidebarrrender />}>
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="track" element={<Tracker />} />
+              <Route path="agent" element={<Agenting/>} />
+            </Route>
+            <Route path="/agent" element={<Sidebarrrenderagent/>} >
+              <Route path="email-agent" element={<Emailagent />} />
+              <Route path="googlesheet-agent" element={<GoogleSheetagent />} />
             </Route>
           </Route>
 
