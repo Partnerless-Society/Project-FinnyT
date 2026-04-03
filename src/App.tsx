@@ -14,6 +14,7 @@ import { Agenting } from "./pages/dashboard/agenting";
 import { Sidebarrrenderagent } from "./pages/sidebar/agentsidebar";
 import { Emailagent } from "./pages/agenting/emailagent";
 import { GoogleSheetagent } from "./pages/agenting/googlesheetagent";
+import { Setting } from "./pages/agenting/setting";
 
 function App() {
 
@@ -47,6 +48,7 @@ function App() {
             <Route path="/agent" element={<Sidebarrrenderagent/>} >
               <Route path="email-agent" element={<Emailagent />} />
               <Route path="googlesheet-agent" element={<GoogleSheetagent />} />
+              <Route path="settings" element={<Setting />} />
             </Route>
           </Route>
 

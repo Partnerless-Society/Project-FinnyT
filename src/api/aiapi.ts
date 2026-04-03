@@ -21,5 +21,17 @@ export const aiapi = {
     ) : Promise<aiagent> => {
         const response = await Server.post("/ai/api/aiagent", form);
         return response.data;
+    },
+    aiagentsheetcreate : async (
+        id : string,
+        url : string,
+        prompt : string
+    ) : Promise<aiagent> => {
+        const response = await Server.post("/ai/api/aiagentsheet",{
+            id,
+            url,
+            prompt
+        })
+        return response.data;
     }
 }

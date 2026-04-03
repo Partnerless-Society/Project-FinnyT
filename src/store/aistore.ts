@@ -5,6 +5,7 @@ import { create } from "zustand";
 export const useAiStore = create<aicreate>((set) => ({
     loadingai: false,
     loadingagent: false,
+    loadingagentsheet: false,
     Aianalyse: async (
         total: number,
         income: number,
@@ -41,6 +42,23 @@ export const useAiStore = create<aicreate>((set) => ({
         }
         finally {
             set({ loadingagent: false })
+        }
+    },
+    Aiagentsheetcreate: async (
+        id: string,
+        url: string,
+        prompt: string
+    ) => {
+        try {
+            set({ loadingagentsheet: true });
+            const result = await aiapi.aiagentsheetcreate(id, url, prompt);
+            return result;
+        }
+        catch (err: unknown) {
+            throw err;
+        }
+        finally {
+            set({ loadingagentsheet: false })
         }
     }
 }))

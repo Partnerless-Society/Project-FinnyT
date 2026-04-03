@@ -10,7 +10,8 @@ import {
     Receipt,
     Mail,
     SheetIcon,
-    DoorOpen
+    DoorOpen,
+    Settings
 } from "lucide-react";
 import {
     Sidebar,
@@ -40,6 +41,7 @@ import { Button } from "@/components/ui/button";
 const navItems = [
     { title: "Email", url: "/agent/email-agent", icon: Mail },
     { title: "GoogleSheet", url: "/agent/googlesheet-agent", icon: SheetIcon },
+    { title: "Service Settings", url: "/agent/settings", icon: Settings },
 ];
 
 export const Sidebarrrenderagent = () => {
