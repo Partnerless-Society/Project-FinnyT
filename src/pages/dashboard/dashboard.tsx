@@ -131,7 +131,7 @@ export const Dashboard = () => {
                     ))
                 ) : (
                     <>
-                        <Card>
+                        <Card className="hover:border-cyan-600 transition-colors cursor-pointer">
                             <CardHeader className="flex flex-row items-center justify-between space-y-0">
                                 <CardTitle className="text-xl font-bold">Total Budget</CardTitle>
                                 <Wallet className="text-cyan-600" />
@@ -153,7 +153,7 @@ export const Dashboard = () => {
                             </CardContent>
                         </Card>
 
-                        <Card>
+                        <Card className="hover:border-green-600 transition-colors cursor-pointer">
                             <CardHeader className="flex flex-row items-center justify-between space-y-0">
                                 <CardTitle className="text-xl font-bold">Income</CardTitle>
                                 <BanknoteArrowUp className="text-green-600" />
@@ -175,7 +175,7 @@ export const Dashboard = () => {
                             </CardContent>
                         </Card>
 
-                        <Card>
+                        <Card className="hover:border-orange-700 transition-colors cursor-pointer">
                             <CardHeader className="flex flex-row items-center justify-between space-y-0">
                                 <CardTitle className="text-xl font-bold">Outcome</CardTitle>
                                 <BanknoteArrowDown className="text-orange-700" />
@@ -197,7 +197,7 @@ export const Dashboard = () => {
                             </CardContent>
                         </Card>
 
-                        <Card >
+                        <Card className={`${(income || 0) - (outcome || 0) < 0 ? "hover:border-red-600" : "hover:border-green-600"} transition-colors cursor-pointer`}>
                             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                 <CardTitle className="text-xl font-bold">NetWorth</CardTitle>
                                 {((income || 0) - (outcome || 0)) < 0 ? <TrendingDown className="text-red-600" /> : <TrendingUp className="text-green-600" />}

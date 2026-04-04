@@ -10,7 +10,7 @@ import {
     DialogTitle,
     DialogFooter,
 } from "@/components/ui/dialog";
-import { Bot, Columns, Edit3, FileSpreadsheet, Link, Link2, MessageCircle, Plus, Rows, Trash, Trash2 } from "lucide-react";
+import { Bot, Columns, Edit3, FileSpreadsheet, Link, Link2, MessageCircle, Plus, Rows, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";

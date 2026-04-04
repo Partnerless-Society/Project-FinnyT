@@ -92,7 +92,7 @@ export function DashboardChart() {
 
 
     return (
-        <Card className="flex flex-col w-full">
+        <Card className="flex flex-col w-full hover:border-cyan-500 transition-colors">
             <CardHeader className="flex flex-row items-center justify-between">
                 <div className="flex flex-col gap-2">
                     <CardTitle>Financial Analytics</CardTitle>
