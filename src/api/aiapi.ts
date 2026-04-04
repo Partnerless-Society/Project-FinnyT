@@ -33,5 +33,37 @@ export const aiapi = {
             prompt
         })
         return response.data;
+    },
+    aiagentsheetupdate : async (
+        id : string,
+        url : string,
+        prompt : string,
+        row? : number,
+        col? : number
+    ) : Promise<aiagent> => {
+        const response  = await Server.post("/ai/api/aiagentsheetupdate",{
+            id,
+            url,
+            prompt,
+            row,
+            col
+        })
+        return response.data
+    },
+    aiagentsheetdelete : async (
+        id : string,
+        url : string,
+        prompt : string,
+        row? : number,
+        col? : number
+    ) : Promise<aiagent> => {
+        const response  = await Server.post("/ai/api/aiagentsheetdelete",{
+            id,
+            url,
+            prompt,
+            row,
+            col
+        })
+        return response.data
     }
 }

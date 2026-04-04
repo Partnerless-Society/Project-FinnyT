@@ -24,12 +24,10 @@ export const Agenting = () => {
                 <p className="text-muted-foreground text-medium">Welcome {name}! This is the ai agenting playground.</p>
                 <p className="text-muted-foreground text-medium">We support:</p>
                 <ul className="list-disc list-inside text-muted-foreground">
-                    <li>Email Agenting</li>
-                    <li>Auto Update Googlesheet</li>
-                    <li>More Features Coming Soon.</li>
+                    <li>Ai Powered Googlesheet Agent</li>
                 </ul>
                 <div className="mt-3">
-                    <Button onClick={() => navigate("/agent/email-agent")}>Go To Playground<PlayCircle/></Button>
+                    <Button onClick={() => navigate("/agent/googlesheet-agent")}>Go To Playground<PlayCircle/></Button>
                 </div>
             </motion.div>
             <div>

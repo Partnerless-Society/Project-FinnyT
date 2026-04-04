@@ -26,5 +26,19 @@ export interface aicreate {
         id : string,
         url : string,
         prompt : string
+    ) => Promise<aiagent>,
+    Aiagentsheetupdate : (
+        id : string,
+        url : string,
+        prompt : string,
+        row? : number,
+        col? : number
+    ) => Promise<aiagent>,
+    Aiagentsheetdelete : (
+        id : string,
+        url : string,
+        prompt : string,
+        row? : number,
+        col? : number
     ) => Promise<aiagent>
 }

@@ -1,14 +1,10 @@
 import {
     BadgeDollarSign,
-    LayoutDashboard,
     Sun,
     Moon,
-    BotMessageSquare,
     LogOut,
     Chrome,
     Github,
-    Receipt,
-    Mail,
     SheetIcon,
     DoorOpen,
     Settings
@@ -27,7 +23,6 @@ import {
     SidebarTrigger,
     SidebarGroupContent,
     SidebarFooter,
-    useSidebar
 } from "@/components/ui/sidebar";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -36,10 +31,8 @@ import { useTheme } from "@/components/ui/themeprovider";
 import { useAuthStore } from "@/store/authstore";
 import { toast } from "sonner";
 import { useDataStore } from "@/store/datastore";
-import { Button } from "@/components/ui/button";
 
 const navItems = [
-    { title: "Email", url: "/agent/email-agent", icon: Mail },
     { title: "GoogleSheet", url: "/agent/googlesheet-agent", icon: SheetIcon },
     { title: "Service Settings", url: "/agent/settings", icon: Settings },
 ];

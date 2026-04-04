@@ -13,7 +13,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast, Toaster } from "sonner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const Setting = () => {
 
@@ -21,6 +22,8 @@ export const Setting = () => {
         servicedata,
         testconnection,
         loadingservice,
+        servicefetch,
+        loadingfetch
     } = useServiceStore();
     const {
         id
@@ -31,6 +34,9 @@ export const Setting = () => {
     const [open, setopen] = useState<boolean>(false);
     const [show, setshow] = useState<boolean>(false);
 
+    useEffect(() => {
+        servicefetch(id ?? "")
+    }, [])
 
     const test = async () => {
         try {
@@ -110,26 +116,67 @@ export const Setting = () => {
                 <div className="flex flex-col gap-1">
                     <h1 className="text-4xl font-medium">Your Service Account</h1>
                 </div>
-                {servicedata ? (
-                    <div className="mt-4 flex items-center space-x-4 justify-between p-4 rounded-xl shadow-md border">
-                        <div className="flex gap-2 items-center">
-                            <User2 size={25} />
-                            <p className="text-muted-foreground">{servicedata.email.substring(0, 30) + "...com"}</p>
+                {loadingfetch ? (
+                    <>
+                        <div className="mt-4 flex items-center space-x-4 justify-between p-4 rounded-xl shadow-md border">
+                            <div className="flex gap-2 items-center">
+                                <Skeleton className="h-6 w-6 rounded-full" />
+
+                                <Skeleton className="h-4 w-40 rounded-md" />
+                            </div>
+
+                            <Skeleton className="h-4 w-20 rounded-md" />
                         </div>
-                        <p className="text-muted-foreground">{new Date(servicedata.date).toLocaleDateString()}</p>
-                    </div>
-                ) : (
-                    <div className="mt-4 flex flex-col gap-2 items-center justify-around h-64 border-card border rounded-xl p-6 text-center">
-                        <User size={35} />
-                        <h2 className="text-xl font-semibold mb-2">
-                            No Service Account Yet
-                        </h2>
-                        <p className="text-muted-foreground mb-4">
-                            You haven’t added any service account. Please create one to get started.
-                        </p>
-                        <Button onClick={() => setopen(prev => !prev)}>Add Service Account <Plus /></Button>
-                    </div>
-                )}
+                        <div className="mt-4 flex items-center space-x-4 justify-between p-4 rounded-xl shadow-md border">
+                            <div className="flex gap-2 items-center">
+                                <Skeleton className="h-6 w-6 rounded-full" />
+
+                                <Skeleton className="h-4 w-40 rounded-md" />
+                            </div>
+
+                            <Skeleton className="h-4 w-20 rounded-md" />
+                        </div>
+                        <div className="mt-4 flex items-center space-x-4 justify-between p-4 rounded-xl shadow-md border">
+                            <div className="flex gap-2 items-center">
+                                <Skeleton className="h-6 w-6 rounded-full" />
+
+                                <Skeleton className="h-4 w-40 rounded-md" />
+                            </div>
+
+                            <Skeleton className="h-4 w-20 rounded-md" />
+                        </div>
+                        <div className="mt-4 flex items-center space-x-4 justify-between p-4 rounded-xl shadow-md border">
+                            <div className="flex gap-2 items-center">
+                                <Skeleton className="h-6 w-6 rounded-full" />
+
+                                <Skeleton className="h-4 w-40 rounded-md" />
+                            </div>
+
+                            <Skeleton className="h-4 w-20 rounded-md" />
+                        </div>
+                    </>)
+                    :
+                    (servicedata ? (
+                        <div className="mt-4 flex items-center space-x-4 justify-between p-4 rounded-xl shadow-md border">
+                            <div className="flex gap-2 items-center">
+                                <User2 size={25} />
+                                <p className="text-muted-foreground">{servicedata.email.substring(0, 30) + "...com"}</p>
+                            </div>
+                            <p className="text-muted-foreground">{new Date(servicedata.date).toLocaleDateString()}</p>
+                        </div>
+
+                    ) : (
+                        <div className="mt-4 flex flex-col gap-2 items-center justify-around h-64 border-card border rounded-xl p-6 text-center">
+                            <User size={35} />
+                            <h2 className="text-xl font-semibold mb-2">
+                                No Service Account Yet
+                            </h2>
+                            <p className="text-muted-foreground mb-4">
+                                You haven’t added any service account. Please create one to get started.
+                            </p>
+                            <Button onClick={() => setopen(prev => !prev)}>Add Service Account <Plus /></Button>
+                        </div>
+                    ))}
             </div>
         </>
     )

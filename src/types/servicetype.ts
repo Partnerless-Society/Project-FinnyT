@@ -11,7 +11,7 @@ export interface servicedata {
 
 export interface serviceurl {
     success : boolean,
-    url : string
+    url : string[]
 }
 
 export interface servicefetchreturn {
@@ -24,7 +24,7 @@ export interface servicecreate {
     loadingservice : boolean,
     loadingfetch : boolean,
     loadingurl : boolean,
-    url : string | null,
+    url : string[],
     testconnection : (
         id : string,
         email : string,

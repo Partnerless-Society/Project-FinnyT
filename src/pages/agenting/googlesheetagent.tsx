@@ -10,7 +10,7 @@ import {
     DialogTitle,
     DialogFooter,
 } from "@/components/ui/dialog";
-import { Bot, Edit3, FileSpreadsheet, Link, Link2, MessageCircle, Plus, Trash2 } from "lucide-react";
+import { Bot, Columns, Edit3, FileSpreadsheet, Link, Link2, MessageCircle, Plus, Rows, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -38,6 +38,8 @@ export const GoogleSheetagent = () => {
     } = useAuthStore();
     const {
         Aiagentsheetcreate,
+        Aiagentsheetupdate,
+        Aiagentsheetdelete,
         loadingagentsheet
     } = useAiStore();
 
@@ -48,8 +50,13 @@ export const GoogleSheetagent = () => {
     const [opencreate, setopencreate] = useState<boolean>(false);
     const [openupdate, setopenupdate] = useState<boolean>(false);
     const [opendelete, setopendelete] = useState<boolean>(false);
+    const [selecturl, setselectedurl] = useState<string>("");
     const [prompt, setprompt] = useState<string>("");
+    const [row, setrow] = useState<string>("");
+    const [col, setcol] = useState<string>("");
     const [aireply, setaireply] = useState<string>("");
+    const [aireplyupdate, setaireplyupdate] = useState<string>("");
+    const [aireplydelete, setaireplydelete] = useState<string>("");
 
     //Functions
     useEffect(() => {
@@ -60,7 +67,6 @@ export const GoogleSheetagent = () => {
     const addgooglesheeturl = async () => {
         try {
             const data = await addurl(id ?? "", urlcreate);
-
             if (data.success) {
                 toast.success(data.message);
             }
@@ -78,14 +84,72 @@ export const GoogleSheetagent = () => {
     }
 
 
+    //Create
     const sheetagentcreate = async () => {
         try {
-            if (!url) {
-                toast.error("Please add Google Sheet URL first.");
+            if (!selecturl) {
+                return toast.error("Please Select The Url")
             }
-            const data = await Aiagentsheetcreate(id ?? "", url ?? "", prompt);
+            if (!prompt) {
+                return toast.error("Please Enter The Instructions To Do")
+            }
+            const data = await Aiagentsheetcreate(id ?? "", selecturl, prompt);
             if (data.success) {
                 setaireply(data.message);
+                setprompt("")
+
+            }
+        }
+        catch (err: unknown) {
+            if (err instanceof Error) {
+                const axiosError = err as any;
+                const error = axiosError.response?.data?.message || err.message;
+                toast.error(error);
+            }
+        }
+    }
+
+    //Update
+    const sheetagentupdate = async () => {
+        try {
+            if (!selecturl) {
+                return toast.error("Please Select The Url")
+            }
+            if (!prompt) {
+                return toast.error("Please Enter The Instructions To Do")
+            }
+            const data = await Aiagentsheetupdate(id ?? "", selecturl, prompt, Number(row), Number(col));
+            if (data.success) {
+                setaireplyupdate(data.message);
+                setprompt("")
+                setrow("")
+                setcol("")
+            }
+        }
+        catch (err: unknown) {
+            if (err instanceof Error) {
+                const axiosError = err as any;
+                const error = axiosError.response?.data?.message || err.message;
+                toast.error(error);
+            }
+        }
+    }
+
+    //Delete
+    const sheetagentdelete = async () => {
+        try {
+            if (!selecturl) {
+                return toast.error("Please Select The Url")
+            }
+            if (!prompt) {
+                return toast.error("Please Enter The Instructions To Do")
+            }
+            const data = await Aiagentsheetdelete(id ?? "", selecturl, prompt, Number(row), Number(col));
+            if (data.success) {
+                setaireplydelete(data.message);
+                setprompt("")
+                setrow("")
+                setcol("")
             }
         }
         catch (err: unknown) {
@@ -124,6 +188,7 @@ export const GoogleSheetagent = () => {
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
+
             {/* Dialog For Create Agent */}
             <Dialog open={opencreate} onOpenChange={setopencreate}>
                 <DialogContent className="sm:max-w-106.25">
@@ -138,7 +203,7 @@ export const GoogleSheetagent = () => {
                             </Label>
                             <Input
                                 placeholder="Google Sheet URL"
-                                value={url ?? ""}
+                                value={selecturl}
                                 disabled
                             />
                         </div>
@@ -178,7 +243,7 @@ export const GoogleSheetagent = () => {
                                 <div className="flex text-[15px] items-center gap-2 mb-2  font-semibold">
                                     <Bot size={14} /> AI Agent Analysis
                                 </div>
-                                <section style={{scrollbarWidth : "none"}} className="border rounded-lg p-3 h-30 overflow-auto space-y-2 text-muted-foreground">
+                                <section style={{ scrollbarWidth: "none" }} className="border rounded-lg p-3 h-25 overflow-auto space-y-2 text-muted-foreground">
                                     {aireply}
                                 </section>
                             </motion.div>
@@ -206,7 +271,7 @@ export const GoogleSheetagent = () => {
                             </Label>
                             <Input
                                 placeholder="Google Sheet URL"
-                                value={url ?? ""}
+                                value={selecturl}
                                 disabled
                             />
                         </div>
@@ -215,6 +280,8 @@ export const GoogleSheetagent = () => {
                                 <MessageCircle size={14} /> Instructions To Do
                             </Label>
                             <Textarea
+                                value={prompt}
+                                onChange={(e) => setprompt(e.target.value)}
                                 placeholder="Enter Instructions"
                                 className="pr-10 resize-none h-24"
                             />
@@ -222,9 +289,11 @@ export const GoogleSheetagent = () => {
                         <div className="grid grid-cols-2 gap-2">
                             <div className="flex flex-col gap-2">
                                 <Label htmlFor="key" className="flex items-center gap-2">
-                                    <MessageCircle size={14} />Enter Row(Optional)
+                                    <Rows size={14} />Enter Row(Optional)
                                 </Label>
                                 <Input
+                                    value={row}
+                                    onChange={(e) => setrow(e.target.value)}
                                     type="number"
                                     placeholder="Enter Row"
                                     className="pr-10 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
@@ -232,9 +301,11 @@ export const GoogleSheetagent = () => {
                             </div>
                             <div className="flex flex-col gap-2">
                                 <Label htmlFor="key" className="flex items-center gap-2">
-                                    <MessageCircle size={14} />Enter Column(Optional)
+                                    <Columns size={14} />Enter Column(Optional)
                                 </Label>
                                 <Input
+                                    value={col}
+                                    onChange={(e) => setcol(e.target.value)}
                                     type="number"
                                     placeholder="Enter Column"
                                     className="pr-10 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
@@ -242,9 +313,41 @@ export const GoogleSheetagent = () => {
                             </div>
                         </div>
                     </div>
+                    <AnimatePresence mode="wait">
+                        {loadingagentsheet ? (
+                            <motion.div
+                                key="loading"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                className=" rounded-xl text-sm mt-4 leading-relaxed"
+                            >
+                                <div className="flex text-[15px] items-center gap-2 mb-2  font-semibold">
+                                    <Bot size={14} className="animate-bounce" /> Working On It ...
+                                </div>
+                                <section className="space-y-2">
+                                    <Skeleton className="h-4 w-full" />
+                                    <Skeleton className="h-4 w-full" />
+                                </section>
+
+                            </motion.div>
+                        ) : (
+                            aireplyupdate &&
+                            <motion.div
+                                key="response"
+                                className="relative rounded-xl mt-4 text-sm leading-relaxed"
+                            >
+                                <div className="flex text-[15px] items-center gap-2 mb-2  font-semibold">
+                                    <Bot size={14} /> AI Agent Analysis
+                                </div>
+                                <section style={{ scrollbarWidth: "none" }} className="border rounded-lg p-3 h-25 overflow-auto space-y-2 text-muted-foreground">
+                                    {aireplyupdate}
+                                </section>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                     <DialogFooter className="mt-4">
-                        <Button >
-                            Update
+                        <Button onClick={sheetagentupdate}>
+                            {loadingagentsheet ? "Updating..." : "Update"}
                         </Button>
                     </DialogFooter>
                 </DialogContent>
@@ -273,6 +376,8 @@ export const GoogleSheetagent = () => {
                                 <MessageCircle size={14} /> Instructions To Do
                             </Label>
                             <Textarea
+                                value={prompt}
+                                onChange={(e) => setprompt(e.target.value)}
                                 placeholder="Enter Instructions"
                                 className="pr-10 resize-none h-24"
                             />
@@ -280,9 +385,11 @@ export const GoogleSheetagent = () => {
                         <div className="grid grid-cols-2 gap-2">
                             <div className="flex flex-col gap-2">
                                 <Label htmlFor="key" className="flex items-center gap-2">
-                                    <MessageCircle size={14} />Enter Row(Optional)
+                                    <Rows size={14} />Enter Row(Optional)
                                 </Label>
                                 <Input
+                                    value={row}
+                                    onChange={(e) => setrow(e.target.value)}
                                     type="number"
                                     placeholder="Enter Row"
                                     className="pr-10 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
@@ -290,9 +397,11 @@ export const GoogleSheetagent = () => {
                             </div>
                             <div className="flex flex-col gap-2">
                                 <Label htmlFor="key" className="flex items-center gap-2">
-                                    <MessageCircle size={14} />Enter Column(Optional)
+                                    <Columns size={14} />Enter Column(Optional)
                                 </Label>
                                 <Input
+                                    value={col}
+                                    onChange={(e) => setcol(e.target.value)}
                                     type="number"
                                     placeholder="Enter Column"
                                     className="pr-10 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
@@ -300,9 +409,41 @@ export const GoogleSheetagent = () => {
                             </div>
                         </div>
                     </div>
+                    <AnimatePresence mode="wait">
+                        {loadingagentsheet ? (
+                            <motion.div
+                                key="loading"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                className=" rounded-xl text-sm mt-4 leading-relaxed"
+                            >
+                                <div className="flex text-[15px] items-center gap-2 mb-2  font-semibold">
+                                    <Bot size={14} className="animate-bounce" /> Working On It ...
+                                </div>
+                                <section className="space-y-2">
+                                    <Skeleton className="h-4 w-full" />
+                                    <Skeleton className="h-4 w-full" />
+                                </section>
+
+                            </motion.div>
+                        ) : (
+                            aireplydelete &&
+                            <motion.div
+                                key="response"
+                                className="relative rounded-xl mt-4 text-sm leading-relaxed"
+                            >
+                                <div className="flex text-[15px] items-center gap-2 mb-2  font-semibold">
+                                    <Bot size={14} /> AI Agent Analysis
+                                </div>
+                                <section style={{ scrollbarWidth: "none" }} className="border rounded-lg p-3 h-25 overflow-auto space-y-2 text-muted-foreground">
+                                    {aireplydelete}
+                                </section>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                     <DialogFooter className="mt-4">
-                        <Button >
-                            Create
+                        <Button onClick={sheetagentdelete}>
+                            {loadingagentsheet ? "Deleting..." : "Delete"}
                         </Button>
                     </DialogFooter>
                 </DialogContent>
@@ -311,10 +452,7 @@ export const GoogleSheetagent = () => {
                 <div className="flex flex-col gap-2">
                     <h1 className="text-4xl font-medium">GoogleSheet</h1>
                     <p className="text-muted-foreground">Welcome To Ai-Powered GoogleSheet Automation Agent.</p>
-                    <div className="mt-2">
-                        <h1 className="text-lg font-medium">Google Sheet Agenting Capabilities</h1>
-                        <p className="text-muted-foreground mt-2">With our Google Sheet Agent, you can automate data management, streamline workflows, and enhance productivity. Effortlessly create, read, update, and delete spreadsheet data, generate dynamic reports, and integrate with other tools to unlock the full potential of your Google Sheets.</p>
-                    </div>
+
                 </div>
             </div>
             <div className="flex justify-between items-center gap-2 mt-4">
@@ -322,19 +460,35 @@ export const GoogleSheetagent = () => {
                     <FileSpreadsheet className="text-green-600" />
                     <h2 className="text-xl font-bold">Sheet Tools</h2>
                 </div>
-                {url ?
-                    <Select defaultValue={url}>
-                        <SelectTrigger className="border px-2 py-1 h-auto rounded-md flex items-center gap-1 focus:ring-0">
-                            <div className="flex items-center gap-1">
-                                <SelectValue placeholder="URL" />
-                            </div>
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value={url}>Google Sheet Url</SelectItem>
-                        </SelectContent>
-                    </Select> :
-                    <Button onClick={() => setopenurl(prev => !prev)}>Add Url <Link2 /></Button>
-                }
+                {url && url.length > 0 ? (
+                    <>
+                        <Select defaultValue={selecturl} onValueChange={(value) => setselectedurl(value)}>
+                            <SelectTrigger className="border px-2 py-1 h-auto rounded-md flex items-center gap-1 focus:ring-0">
+                                <div className="flex items-center gap-1">
+                                    <SelectValue placeholder="GoogleSheetUrl" />
+                                </div>
+                            </SelectTrigger>
+                            <SelectContent>
+                                {url.map((element, index) => (
+                                    <SelectItem key={index} value={element}>
+                                        URL-{index + 1}
+                                    </SelectItem>
+                                ))}
+                                <Button variant="ghost"
+                                    className="w-full p-1 mt-2"
+                                    onClick={() => setopenurl(true)}
+                                >
+                                    Add Url <Link2 />
+                                </Button>
+                            </SelectContent>
+                        </Select>
+
+                    </>
+                ) : (
+                    <Button onClick={() => setopenurl(prev => !prev)}>
+                        Add Url <Link2 />
+                    </Button>
+                )}
             </div>
             {loadingfetch ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-5">

@@ -60,5 +60,43 @@ export const useAiStore = create<aicreate>((set) => ({
         finally {
             set({ loadingagentsheet: false })
         }
+    },
+    Aiagentsheetupdate: async (
+        id: string,
+        url: string,
+        prompt: string,
+        row?: number,
+        col?: number
+    ) => {
+        try {
+            set({ loadingagentsheet: true })
+            const result = await aiapi.aiagentsheetupdate(id, url, prompt, row, col);
+            return result;
+        }
+        catch (err: unknown) {
+            throw err;
+        }
+        finally {
+            set({ loadingagentsheet: false })
+        }
+    },
+    Aiagentsheetdelete: async (
+        id: string,
+        url: string,
+        prompt: string,
+        row?: number,
+        col?: number
+    ) => {
+        try {
+            set({ loadingagentsheet: true })
+            const result = await aiapi.aiagentsheetdelete(id, url, prompt, row, col);
+            return result;
+        }
+        catch (err: unknown) {
+            throw err;
+        }
+        finally {
+            set({ loadingagentsheet: false })
+        }
     }
 }))

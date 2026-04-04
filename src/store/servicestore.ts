@@ -8,7 +8,7 @@ export const useServiceStore = create<servicecreate>((set) => (
         loadingservice: false,
         loadingfetch: false,
         loadingurl: false,
-        url : null,
+        url : [],
         testconnection: async (
             id: string,
             email: string,
