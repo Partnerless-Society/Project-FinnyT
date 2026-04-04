@@ -4,11 +4,23 @@ import { create } from "zustand";
 
 export const useServiceStore = create<servicecreate>((set) => (
     {
+        //variable
         servicedata: null,
         loadingservice: false,
         loadingfetch: false,
         loadingurl: false,
-        url : [],
+        url: [],
+
+        //State Clear
+        resetservice: () => set({
+            servicedata: null,
+            loadingservice: false,
+            loadingfetch: false,
+            loadingurl: false,
+            url: [],
+        }),
+
+        //Functions
         testconnection: async (
             id: string,
             email: string,

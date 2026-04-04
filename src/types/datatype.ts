@@ -10,6 +10,25 @@ export interface datareturnmessage {
     message: string,
 }
 
+export interface MonthlyReport  {
+  month: number;     
+  year: number;     
+  income: number;
+  outcome: number;
+  total: number;
+  networth: number;
+};
+
+export interface analyticreturn  {
+  success: boolean;
+  data: MonthlyReport[];
+};
+
+export interface yearreturn {
+    success : boolean,
+    years : number[]
+}
+
 export interface datatableincomeoutcome {
     category: string,
     amount: number,
@@ -43,6 +62,8 @@ export interface datacreate {
     loadingchart: boolean,
     incomechart: datachart[],
     outcomechart: datachart[],
+    monthlyreport : MonthlyReport[],
+    years : number[],
     incometable: datatableincomeoutcome[],
     outcometable: datatableincomeoutcome[],
     income: number | null,
@@ -70,4 +91,11 @@ export interface datacreate {
     fetchchartoutcome: (
         id: string
     ) => Promise<void>,
+    fetchyears : (
+        id : string
+    ) => Promise<void>,
+    fetchmonthlyreport : (
+        id : string,
+        year : number
+    ) => Promise<void>
 }

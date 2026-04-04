@@ -10,7 +10,7 @@ import {
     DialogTitle,
     DialogFooter,
 } from "@/components/ui/dialog";
-import { Bot, Columns, Edit3, FileSpreadsheet, Link, Link2, MessageCircle, Plus, Rows, Trash2 } from "lucide-react";
+import { Bot, Columns, Edit3, FileSpreadsheet, Link, Link2, MessageCircle, Plus, Rows, Trash, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -465,7 +465,7 @@ export const GoogleSheetagent = () => {
                         <Select defaultValue={selecturl} onValueChange={(value) => setselectedurl(value)}>
                             <SelectTrigger className="border px-2 py-1 h-auto rounded-md flex items-center gap-1 focus:ring-0">
                                 <div className="flex items-center gap-1">
-                                    <SelectValue placeholder="GoogleSheetUrl" />
+                                    <SelectValue placeholder="Choose URL" />
                                 </div>
                             </SelectTrigger>
                             <SelectContent>

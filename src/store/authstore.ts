@@ -12,7 +12,7 @@ export const useAuthStore = create<authcreate>((set) => ({
     email: null,
     type: null,
 
-    //Function
+    //Functions
     usersignup: async (
         name: string,
         email: string,

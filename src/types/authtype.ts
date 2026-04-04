@@ -21,6 +21,7 @@ export interface authcreate {
     name : string | null,
     email : string | null,
     type : string | null,
+    
     usersignup: (
         name: string,
         email: string,

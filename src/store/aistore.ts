@@ -3,9 +3,12 @@ import type { aicreate } from "@/types/aitype";
 import { create } from "zustand";
 
 export const useAiStore = create<aicreate>((set) => ({
+    //Variable
     loadingai: false,
     loadingagent: false,
     loadingagentsheet: false,
+
+    //Functions
     Aianalyse: async (
         total: number,
         income: number,

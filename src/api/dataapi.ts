@@ -1,5 +1,5 @@
 import { Server } from "@/config/axiosconfig"
-import type { datareturn, datareturnchart, datareturnmessage, datareturntrackincomeoutcome } from "@/types/datatype"
+import type { analyticreturn, datareturn, datareturnchart, datareturnmessage, datareturntrackincomeoutcome, yearreturn } from "@/types/datatype"
 
 export const dataapi = {
     //Fetch
@@ -72,4 +72,26 @@ export const dataapi = {
         })
         return response.data
     },
+    fetchyears : async (
+        id : string
+    ) : Promise<yearreturn> => {
+        const response = await Server.get("/data/api/getyears", {
+            params : {
+                id
+            }
+        })
+        return response.data;
+    },
+    fetchanalyticschart : async (
+        id : string,
+        year : number
+    ) : Promise<analyticreturn> => {
+        const response = await Server.get("/data/api/getmonthlydatas",{
+            params : {
+                id,
+                year
+            }
+        })
+        return response.data;
+    }
 }

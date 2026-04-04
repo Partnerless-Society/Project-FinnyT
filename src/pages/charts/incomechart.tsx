@@ -76,7 +76,7 @@ export function TotalIncomeChart() {
 
 
     return (
-        <Card className="flex flex-col w-full">
+        <Card className="flex flex-col w-full ">
             <CardHeader className="items-center pb-0">
                 <CardTitle>Total Income</CardTitle>
                 <CardDescription>Total Income For Each Categories.</CardDescription>

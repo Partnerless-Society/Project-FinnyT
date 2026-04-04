@@ -17,22 +17,14 @@ import {
 } from "@/components/ui/chart"
 import { useAuthStore } from "@/store/authstore"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useDataStore } from "@/store/datastore"
+import { useEffect, useState } from "react"
 
-//Configurations
-const chartData = [
-    { month: "January", outcome: 186, income: 80, totalbudget: 300 },
-    { month: "February", outcome: 305, income: 200, totalbudget: 300 },
-    { month: "March", outcome: 237, income: 120, totalbudget: 300 },
-    { month: "April", outcome: 73, income: 190, totalbudget: 300 },
-    { month: "May", outcome: 209, income: 130, totalbudget: 300 },
-    { month: "June", outcome: 214, income: 140, totalbudget: 300 },
-    { month: "July", outcome: 214, income: 140, totalbudget: 300 },
-    { month: "August", outcome: 214, income: 140, totalbudget: 300 },
-    { month: "September", outcome: 214, income: 140, totalbudget: 300 },
-    { month: "October", outcome: 214, income: 140, totalbudget: 300 },
-    { month: "November", outcome: 214, income: 140, totalbudget: 300 },
-    { month: "December", outcome: 214, income: 140, totalbudget: 300 },
-]
+const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+];
+
 
 const chartConfig = {
     outcome: {
@@ -46,17 +38,58 @@ const chartConfig = {
     totalbudget: {
         label: "Total",
         color: "var(--chart-3)",
+    },
+    networth: {
+        label: "Networth",
+        color: "var(--chart-4)",
     }
 } satisfies ChartConfig
 
 export function DashboardChart() {
 
     //Store
-    const { name,
-        email,
+    const {
+        name,
         id,
-        type
     } = useAuthStore();
+    const {
+        years,
+        monthlyreport,
+        fetchyears,
+        fetchmonthlyreport
+    } = useDataStore();
+
+    //Functions
+    useEffect(() => {
+        fetchyears(id ?? "");
+    }, [id]);
+
+     //States
+    const [selectyear, setselectyear] = useState<string>("");
+
+    useEffect(() => {
+        if (years.length > 0 && !selectyear) {
+            setselectyear(years[0].toString());
+        }
+    }, [years, selectyear]);
+
+    //Functions
+    useEffect(() => {
+        if (selectyear) {
+            fetchmonthlyreport(id ?? "", Number(selectyear));
+        }
+    }, [id, selectyear]);
+
+    //Chart Data
+    const chartData = monthlyreport.map(element => ({
+        month: monthNames[element.month - 1],
+        income: element.income,
+        outcome: element.outcome,
+        totalbudget: element.total,
+        networth: element.networth
+    }));
+
+
 
     return (
         <Card className="flex flex-col w-full">
@@ -64,15 +97,20 @@ export function DashboardChart() {
                 <div className="flex flex-col gap-2">
                     <CardTitle>Financial Analytics</CardTitle>
                     <CardDescription>
-                        Showing total income and outcome for the last 6 months.
+                        <p>Showing total income and outcome for the last 12 months.</p>
+                        <p>Date will show at the end of each month.</p>
                     </CardDescription>
                 </div>
-                <Select>
+                <Select value={selectyear} onValueChange={setselectyear}>
                     <SelectTrigger>
-                        <SelectValue placeholder="2026" />
+                        <SelectValue placeholder="Select Year" />
                     </SelectTrigger>
                     <SelectContent>
-                        <SelectItem value="2026">2026</SelectItem>
+                        {years.map((year) => (
+                            <SelectItem key={year} value={year.toString()}>
+                                {year}
+                            </SelectItem>
+                        ))}
                     </SelectContent>
                 </Select>
             </CardHeader>
@@ -114,6 +152,7 @@ export function DashboardChart() {
                             stroke="var(--color-income)"
                             stackId="a"
                         />
+
                         <Area
                             dataKey="outcome"
                             type="natural"
@@ -122,7 +161,14 @@ export function DashboardChart() {
                             stroke="var(--color-outcome)"
                             stackId="a"
                         />
-
+                        <Area
+                            dataKey="networth"
+                            type="natural"
+                            fill="var(--color-networth)"
+                            fillOpacity={0.4}
+                            stroke="var(--color-networth)"
+                            stackId="a"
+                        />
                     </AreaChart>
                 </ChartContainer>
             </CardContent>

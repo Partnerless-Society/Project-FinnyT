@@ -32,6 +32,7 @@ import { useTheme } from "@/components/ui/themeprovider";
 import { useAuthStore } from "@/store/authstore";
 import { toast } from "sonner";
 import { useDataStore } from "@/store/datastore";
+import { useServiceStore } from "@/store/servicestore";
 
 const navItems = [
     { title: "Dashboard", url: "/app/dashboard", icon: LayoutDashboard },
@@ -55,11 +56,16 @@ export const Sidebarrrender = () => {
         type,
         userlogout } = useAuthStore();
     const { reset } = useDataStore();
+    const {
+      resetservice
+    } = useServiceStore()
 
     const handlelogout = async () => {
         try {
             const result = await userlogout();
             reset();
+            resetservice();
+
             if (result.success) {
                 toast.success(result.message);
                 navigate("/login", { replace: true })

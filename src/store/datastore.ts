@@ -8,6 +8,8 @@ export const useDataStore = create<datacreate>((set) => ({
     loadingcreatedata: false,
     loadingincomeoutcome: false,
     loadingchart: false,
+    years: [],
+    monthlyreport: [],
     incomechart: [],
     outcomechart: [],
     incometable: [],
@@ -15,13 +17,15 @@ export const useDataStore = create<datacreate>((set) => ({
     total: null,
     income: null,
     outcome: null,
-     
+
     //StateClear
     reset: () => set({
         incomechart: [],
         outcomechart: [],
         incometable: [],
         outcometable: [],
+        years: [],
+        monthlyreport: [],
         income: null,
         outcome: null,
         loadingdata: false,
@@ -118,7 +122,7 @@ export const useDataStore = create<datacreate>((set) => ({
             set({ loadingchart: true })
             const result = await dataapi.fetchchartincome(id);
             set({
-                incomechart : result.data
+                incomechart: result.data
             })
         }
         catch (err: unknown) {
@@ -147,6 +151,31 @@ export const useDataStore = create<datacreate>((set) => ({
             set({
                 loadingchart: false
             })
+        }
+    },
+    fetchyears: async (
+        id: string
+    ) => {
+        try {
+            const result = await dataapi.fetchyears(id);
+            set({ years: result.years })
+        }
+        catch (err: unknown) {
+            throw err;
+        }
+    },
+    fetchmonthlyreport: async (
+        id: string,
+        year: number
+    ) => {
+        try {
+            const result = await dataapi.fetchanalyticschart(id, year);
+            set({
+                monthlyreport: result.data
+            })
+        }
+        catch (err: unknown) {
+            throw err;
         }
     }
 }))

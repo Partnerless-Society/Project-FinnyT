@@ -4,13 +4,17 @@ import { useEffect, useState } from "react"
 import { Navigate, Outlet } from "react-router-dom";
 
 export const Protectedroute = () => {
+    //Store
     const {
         loadinguser,
         id,
         userfetch 
     } = useAuthStore();
+
+    //State
     const [isChecking, setIsChecking] = useState(true);
 
+    //Functions
     useEffect(() => {
         const checkAuth = async () => {
             if (!id) {

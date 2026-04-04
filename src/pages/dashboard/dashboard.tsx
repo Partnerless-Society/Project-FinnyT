@@ -91,6 +91,8 @@ export const Dashboard = () => {
                 ) : aianalyse ? (
                     <motion.div
                         key="response"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
                         className="relative p-4 rounded-xl border text-sm leading-relaxed"
                     >
                         <div className="flex text-[15px] items-center gap-2 mb-2  font-semibold">
@@ -226,7 +228,6 @@ export const Dashboard = () => {
                 viewport={{ once: true, amount: 0.5 }}
                 transition={{ duration: 0.5 }}>
                 <DashboardChart />
-
             </motion.div>
             <motion.div
                 initial={{ opacity: 0, y: -20 }}
