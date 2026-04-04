@@ -2,6 +2,7 @@ import { Server } from "@/config/axiosconfig"
 import type { servicefetchreturn, servicereturn, serviceurl } from "@/types/servicetype"
 
 export const serviceapi = {
+    //ServiceAcc test
     testconnection: async (
         id: string,
         email: string,
@@ -14,6 +15,7 @@ export const serviceapi = {
         })
         return response.data
     },
+    //Fetch Service Acc Lists
     fetchserviceacc: async (
         id: string
     ): Promise<servicefetchreturn> => {
@@ -24,6 +26,7 @@ export const serviceapi = {
         })
         return response.data;
     },
+    //Add Googlesheet url to allow ai agent to edit
     addurl: async (
         id: string,
         url: string
@@ -34,6 +37,7 @@ export const serviceapi = {
         });
         return response.data;
     },
+    //Fetch Googlesheeturl
     fetchurl: async (
         id: string
     ): Promise<serviceurl> => {

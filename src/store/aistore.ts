@@ -8,6 +8,7 @@ export const useAiStore = create<aicreate>((set) => ({
     loadingagent: false,
     loadingagentsheet: false,
 
+    
     //Functions
     Aianalyse: async (
         total: number,

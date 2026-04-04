@@ -2,6 +2,7 @@ import { Server } from "@/config/axiosconfig"
 import type { aiagent, aitype } from "@/types/aitype";
 
 export const aiapi = {
+    //Analyse Ai
     aianalyse : async (
         total : number,
         income : number , 
@@ -16,12 +17,14 @@ export const aiapi = {
        });
        return response.data
     },
+    //Aiagent To See Photo And Input Data
     aiagent : async (
         form : FormData
     ) : Promise<aiagent> => {
         const response = await Server.post("/ai/api/aiagent", form);
         return response.data;
     },
+    //GoogleSheetAgent
     aiagentsheetcreate : async (
         id : string,
         url : string,

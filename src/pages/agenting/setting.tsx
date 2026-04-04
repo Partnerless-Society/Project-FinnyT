@@ -18,6 +18,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export const Setting = () => {
 
+    //Store
     const {
         servicedata,
         testconnection,
@@ -29,11 +30,13 @@ export const Setting = () => {
         id
     } = useAuthStore();
 
+    //States
     const [email, setEmail] = useState<string>("");
     const [key, setKey] = useState<string>("");
     const [open, setopen] = useState<boolean>(false);
     const [show, setshow] = useState<boolean>(false);
 
+    //Functions
     useEffect(() => {
         servicefetch(id ?? "")
     }, [])

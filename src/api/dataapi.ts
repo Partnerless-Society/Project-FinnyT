@@ -72,6 +72,7 @@ export const dataapi = {
         })
         return response.data
     },
+    //AnalyticsChart
     fetchyears : async (
         id : string
     ) : Promise<yearreturn> => {

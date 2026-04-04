@@ -8,7 +8,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useAuthStore } from "@/store/authstore"
 import { useDataStore } from "@/store/datastore"
-import { Banknote, Bot, Keyboard, Plus, PlusCircle, Sparkles, Tag, TrendingDown, TrendingUp } from "lucide-react"
+import { Banknote, Bot, Keyboard, Plus, PlusCircle, Tag, TrendingDown, TrendingUp } from "lucide-react"
 import { useEffect, useState } from "react"
 import { toast, Toaster } from "sonner"
 import { AnimatePresence, motion } from "framer-motion";
@@ -47,6 +47,7 @@ export const Tracker = () => {
         setfile(photo);
     }
 
+    //AiAgent Data Add
     const Agentadd = async () => {
         const form = new FormData();
         form.append("id", id ?? "");
@@ -70,6 +71,7 @@ export const Tracker = () => {
         }
     }
 
+    //ManualInput
     const Add = async () => {
         try {
             const data = await createdata(id ?? "", type, amount ?? 0, category, source);
@@ -92,6 +94,7 @@ export const Tracker = () => {
             setopen(prev => !prev);
         }
     }
+    //Functions
     useEffect(() => {
         if (id) {
             fetchdataincome(id);

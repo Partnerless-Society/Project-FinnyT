@@ -8,6 +8,7 @@ import {
     Clock
 } from "lucide-react";
 
+//landingpage lists,cards showcase
 export const features: Features[] = [
     {
         id: 1,
