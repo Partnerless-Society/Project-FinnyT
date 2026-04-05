@@ -10,7 +10,7 @@ import {
     DialogTitle,
     DialogFooter,
 } from "@/components/ui/dialog";
-import { Bot, Columns, Edit3, FileSpreadsheet, Link, Link2, MessageCircle, Plus, Rows, Trash2 } from "lucide-react";
+import { Bot, Columns, Edit3, FileSpreadsheet, Link, Link2, MessageCircle, Plus, Rows, Trash2, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -20,6 +20,7 @@ import { toast, Toaster } from "sonner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useAiStore } from "@/store/aistore";
 import { AnimatePresence, motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 export const GoogleSheetagent = () => {
 
@@ -57,6 +58,10 @@ export const GoogleSheetagent = () => {
     const [aireply, setaireply] = useState<string>("");
     const [aireplyupdate, setaireplyupdate] = useState<string>("");
     const [aireplydelete, setaireplydelete] = useState<string>("");
+    
+
+    //Navigation
+    const navigate = useNavigate();
 
     //Functions
     useEffect(() => {
@@ -485,9 +490,12 @@ export const GoogleSheetagent = () => {
 
                     </>
                 ) : (
-                    <Button onClick={() => setopenurl(prev => !prev)}>
-                        Add Url <Link2 />
-                    </Button>
+                    <>
+                        {servicedata &&
+                            <Button onClick={() => setopenurl(prev => !prev)}>
+                                Add Url <Link2 />
+                            </Button>}
+                    </>
                 )}
             </div>
             {loadingfetch ? (
@@ -506,7 +514,7 @@ export const GoogleSheetagent = () => {
                     ))}
                 </div>
             ) : (
-                servicedata && (
+                servicedata ? (
                     <>
                         <div className="mt-4">
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -541,6 +549,17 @@ export const GoogleSheetagent = () => {
                             </div>
                         </div>
                     </>
+                ) : (
+                    <div className="mt-4 flex flex-col gap-2 items-center justify-around h-64 border-card border rounded-xl p-6 text-center">
+                        <User size={35} />
+                        <h2 className="text-xl font-semibold mb-2">
+                            No Service Account Yet
+                        </h2>
+                        <p className="text-muted-foreground mb-4">
+                            You haven’t added any service account. Please create one to get started.
+                        </p>
+                        <Button onClick={() => navigate("/agent/settings")}>Go To Service Account Setting</Button>
+                    </div>
                 )
             )
             }

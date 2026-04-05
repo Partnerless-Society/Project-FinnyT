@@ -5,7 +5,6 @@ import {
     Moon,
     BotMessageSquare,
     LogOut,
-    Chrome,
     Github,
     Receipt,
     DoorOpen
@@ -33,6 +32,7 @@ import { useAuthStore } from "@/store/authstore";
 import { toast } from "sonner";
 import { useDataStore } from "@/store/datastore";
 import { useServiceStore } from "@/store/servicestore";
+import { GoogleIcon } from "@/components/googleicon";
 
 const navItems = [
     { title: "Dashboard", url: "/app/dashboard", icon: LayoutDashboard },
@@ -121,13 +121,13 @@ export const Sidebarrrender = () => {
                             <DropdownMenuTrigger asChild>
                                 <button className="border-t flex items-center w-full gap-2 py-2 hover:bg-black/15 rounded-lg">
                                     <Avatar className="shrink-0">
-                                        <AvatarFallback className="bg-accent-foreground font-medium text-white dark:text-black">
+                                        <AvatarFallback className="bg-white border border-gray-400 font-medium text-black">
                                             {(() => {
                                                 switch (type) {
                                                     case "finnyT":
                                                         return name?.substring(0, 1).toUpperCase();
                                                     case "google":
-                                                        return <Chrome />;
+                                                        return <GoogleIcon />;
                                                     case "guest":
                                                         return <Github />;
                                                 }

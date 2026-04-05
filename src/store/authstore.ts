@@ -7,11 +7,31 @@ export const useAuthStore = create<authcreate>((set) => ({
     loadingsignup: false,
     loadinglogin: false,
     loadinguser: false,
+    loadinggoogle: false,
     id: null,
     name: null,
     email: null,
     type: null,
 
+    googlelogin: async (
+        name: string,
+        email: string,
+    ) => {
+        try {
+            set({ loadinggoogle: true });
+            const result = await authapi.usergooglelogin(
+                name,
+                email
+            );
+            return result;
+        }
+        catch (err: unknown) {
+            throw err;
+        }
+        finally {
+            set({ loadinggoogle: false })
+        }
+    },
     //Functions
     usersignup: async (
         name: string,
@@ -72,7 +92,7 @@ export const useAuthStore = create<authcreate>((set) => ({
                 email: null,
                 type: null,
             });
-        
+
         } finally {
             set({ loadinguser: false });
         }
@@ -91,7 +111,7 @@ export const useAuthStore = create<authcreate>((set) => ({
         catch (err: unknown) {
             throw err;
         }
-        finally{
+        finally {
             set({ loadinguser: false });
         }
     }

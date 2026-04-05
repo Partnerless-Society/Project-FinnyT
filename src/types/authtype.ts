@@ -13,15 +13,32 @@ export interface authuserinfo {
     }
 }
 
+export interface googleuser {
+    sub: string;
+    name: string;
+    given_name: string;
+    family_name: string;
+    picture: string;
+    email: string;
+    email_verified: boolean;
+    locale?: string;
+}
+
+
 export interface authcreate {
     loadingsignup: boolean,
     loadinglogin: boolean,
     loadinguser : boolean,
+    loadinggoogle : boolean,
     id : string | null,
     name : string | null,
     email : string | null,
     type : string | null,
-    
+
+    googlelogin: (
+        name: string,
+        email: string,
+    ) => Promise<authreturn>,
     usersignup: (
         name: string,
         email: string,

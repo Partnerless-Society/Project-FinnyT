@@ -1,7 +1,27 @@
 import { Server } from "@/config/axiosconfig";
-import type { authreturn, authuserinfo } from "@/types/authtype";
+import type { authreturn, authuserinfo, googleuser } from "@/types/authtype";
+import axios from "axios";
+import type { TokenResponse } from "@react-oauth/google";
 
 export const authapi = {
+     googletoken: async (response: TokenResponse) : Promise<googleuser> => {
+        const res = await axios.get<googleuser>("https://www.googleapis.com/oauth2/v3/userinfo", {
+            headers: {
+                Authorization: `Bearer ${response.access_token}`
+            }
+        })
+        return res.data;
+    },
+    usergooglelogin : async (
+        name : string,
+        email : string,
+    ) : Promise<authreturn> => {
+        const response = await Server.post("/user/api/googlelogin",{
+            name,
+            email
+        })
+        return response.data;
+    },
     //Signup
     usersignup: async (
         name: string,

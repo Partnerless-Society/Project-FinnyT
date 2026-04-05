@@ -1,3 +1,4 @@
+import { authapi } from "@/api/authapi";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -11,6 +12,7 @@ import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useTheme } from "@/components/ui/themeprovider";
 import { useAuthStore } from "@/store/authstore";
+import { useGoogleLogin, type TokenResponse } from "@react-oauth/google";
 import { Github, Chrome, DoorOpenIcon, ArrowRight, Sun, Moon, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -36,7 +38,8 @@ export const Signup = () => {
     //Store
     const {
         usersignup,
-        loadingsignup
+        loadingsignup,
+        googlelogin
     } = useAuthStore();
 
     //Function
@@ -62,6 +65,37 @@ export const Signup = () => {
             }
         }
     }
+
+    
+        const googleauth : any = useGoogleLogin({
+            onSuccess: async (response: TokenResponse) => {
+                try {
+                    const result = await authapi.googletoken(response);
+                    console.log(result);
+                    const feedback = await googlelogin(
+                        result.name,
+                        result.email,
+                    )
+                    toast.success(feedback.message);
+                    setTimeout(() => {
+                        navigate("/app/dashboard", { replace: true })
+                    }, 2000);
+                }
+                catch (err: unknown) {
+                    if (err instanceof Error) {
+    
+                        const axiosError = err as any;
+                        const error = axiosError.response?.data?.message || err.message;
+                        toast.error(error);
+                    } else {
+                        toast.error("An unexpected error occurred.");
+                    }
+                }
+            },
+            onError: () => {
+                toast.error("Google login fail!")
+            }
+        });
 
     return (
         <>
@@ -141,7 +175,7 @@ export const Signup = () => {
                                 <Github className="mr-2 h-4 w-4" />
                                 Github
                             </Button>
-                            <Button variant="outline" className="w-full">
+                            <Button onClick={googleauth} variant="outline" className="w-full">
                                 <Chrome className="mr-2 h-4 w-4" />
                                 Google
                             </Button>
