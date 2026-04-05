@@ -1,4 +1,5 @@
 import { authapi } from "@/api/authapi";
+import { GoogleIcon } from "@/components/googleicon";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -11,10 +12,11 @@ import {
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Spinner } from "@/components/ui/spinner";
 import { useTheme } from "@/components/ui/themeprovider";
 import { useAuthStore } from "@/store/authstore";
 import { useGoogleLogin, type TokenResponse } from "@react-oauth/google";
-import { Github, Chrome, ArrowRight, DoorOpenIcon, Sun, Moon, Loader2 } from "lucide-react";
+import { ArrowRight, DoorOpenIcon, Sun, Moon, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, Toaster } from "sonner";
@@ -41,7 +43,8 @@ export const Login = () => {
     const {
         userlogin,
         loadinglogin,
-        googlelogin
+        googlelogin,
+        loadinggoogle
     } = useAuthStore();
 
 
@@ -69,7 +72,7 @@ export const Login = () => {
         }
     }
 
-    const googleauth : any = useGoogleLogin({
+    const googleauth: any = useGoogleLogin({
         onSuccess: async (response: TokenResponse) => {
             try {
                 const result = await authapi.googletoken(response);
@@ -165,17 +168,17 @@ export const Login = () => {
                                 </span>
                             </div>
                         </div>
-                        <div className="grid grid-cols-2 w-full gap-4">
-                            <Button variant="outline" className="w-full h-10 hover:bg-slate-50">
-                                <Github className="mr-2 h-4 w-4" />
-                                Github
-                            </Button>
-                            <Button onClick={googleauth} variant="outline" className="w-full h-10 hover:bg-slate-50">
-                                <Chrome className="mr-2 h-4 w-4" />
-                                Google
+                        <div className="grid grid-cols-1 w-full gap-4">
+                            <Button onClick={googleauth} variant="outline" className="w-full rounded-full">
+                                {loadinggoogle ? <>
+                                    <Spinner />
+                                    Signing in...
+                                </> : <>
+                                    <GoogleIcon />
+                                    Google
+                                </>}
                             </Button>
                         </div>
-
                     </CardFooter>
                 </Card>
             </div>

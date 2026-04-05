@@ -35,11 +35,12 @@ export const Setting = () => {
     const [key, setKey] = useState<string>("");
     const [open, setopen] = useState<boolean>(false);
     const [show, setshow] = useState<boolean>(false);
+    const [refresh, setrefresh] = useState<boolean>(false);
 
     //Functions
     useEffect(() => {
         servicefetch(id ?? "")
-    }, [])
+    }, [refresh])
 
     const test = async () => {
         try {
@@ -50,13 +51,15 @@ export const Setting = () => {
         }
         catch (err: unknown) {
             if (err instanceof Error) {
-
                 const axiosError = err as any;
                 const error = axiosError.response?.data?.message || err.message;
                 toast.error(error);
             } else {
                 toast.error("An unexpected error occurred.");
             }
+        }
+        finally {
+            setrefresh(prev => !prev)
         }
     }
 

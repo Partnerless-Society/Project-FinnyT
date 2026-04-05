@@ -69,6 +69,12 @@ export const GoogleSheetagent = () => {
         fetchurl(id ?? "");
     }, [refresh])
 
+    useEffect(() => {
+         if(url.length > 0 && !selecturl){
+            setselectedurl(url[0]);
+         }
+    },[url,selecturl])
+
     const addgooglesheeturl = async () => {
         try {
             const data = await addurl(id ?? "", urlcreate);
@@ -85,6 +91,7 @@ export const GoogleSheetagent = () => {
         }
         finally {
             setrefresh(prev => !prev);
+            setopenurl(prev => !prev);
         }
     }
 
@@ -467,7 +474,7 @@ export const GoogleSheetagent = () => {
                 </div>
                 {url && url.length > 0 ? (
                     <>
-                        <Select defaultValue={selecturl} onValueChange={(value) => setselectedurl(value)}>
+                        <Select value={selecturl} onValueChange={(value) => setselectedurl(value)}>
                             <SelectTrigger className="border px-2 py-1 h-auto rounded-md flex items-center gap-1 focus:ring-0">
                                 <div className="flex items-center gap-1">
                                     <SelectValue placeholder="Choose URL" />

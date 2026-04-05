@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { ArrowUp, BadgeDollarSign, Book, CircleCheck, Github, HomeIcon, Linkedin, Menu, Moon, Sun, ToolboxIcon, Twitter, X } from "lucide-react"
+import { ArrowUp, BadgeDollarSign, Book, CircleCheck, CookieIcon, Github, HomeIcon, Linkedin, Menu, Moon, Sun, ToolboxIcon, Twitter, X } from "lucide-react"
 import { useTheme } from "@/components/ui/themeprovider"
 import { useEffect, useRef, useState } from "react";
 import { carousel, features, lists, step } from "@/features/features";
@@ -8,13 +8,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/store/authstore";
+import { Drawer, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 
 export const Home = () => {
     //Theme
     const { theme,
         setTheme
     } = useTheme();
-    
+
     const toggletheme = () => {
         setTheme(theme === "dark" ? "light" : "dark");
     };
@@ -36,7 +37,7 @@ export const Home = () => {
     const reviewRef = useRef<HTMLDivElement | null>(null);
     const [menutoggle, setmenutoggle] = useState<boolean>(false);
     const [showScrollTop, setShowScrollTop] = useState(false);
-
+    const [open,setopen] = useState<boolean>(false);
 
     //Function
     const scrollTo = (ref: React.RefObject<HTMLDivElement | null>) => {
@@ -62,6 +63,26 @@ export const Home = () => {
 
     return (
         <>
+            <Drawer open={open} onOpenChange={setopen}>
+                <DrawerContent className="p-4">
+                    <div className="mx-auto w-full max-w-sm">
+                        <DrawerHeader className="flex flex-col items-center text-center">
+                            <div className="bg-primary/10 p-3 rounded-full mb-2">
+                                <CookieIcon className="h-6 w-6 text-primary" />
+                            </div>
+                            <DrawerTitle className="text-xl">We use cookies</DrawerTitle>
+                            <DrawerDescription>
+                                We use cookies to enhance your experience during login, session persist, analyze site traffic, and serve better ads.
+                            </DrawerDescription>
+                        </DrawerHeader>
+                        <DrawerFooter className="flex justify-center flex-row gap-2 pt-2">
+                            <Button variant="default" onClick={() => setopen(false)}>
+                                Accept All
+                            </Button>
+                        </DrawerFooter>
+                    </div>
+                </DrawerContent>
+            </Drawer>
             <AnimatePresence>
                 {showScrollTop && (
                     <motion.button
@@ -328,9 +349,9 @@ export const Home = () => {
                             © {new Date().getFullYear()} FinnyT. All Rights Reserved.
                         </p>
                         <div className="flex gap-5 text-xs font-medium ">
-                            <a href="#" className="hover:text-slate-900">Cookies</a>
-                            <a href="#" className="hover:text-slate-900">Terms</a>
-                            <a href="#" className="hover:text-slate-900">Contact Support</a>
+                            <p onClick={() => setopen(true)} className="cursor-pointer hover:text-gray-500">Cookies</p>
+                            <p className="cursor-pointer hover:text-gray-500">Terms</p>
+                            <p className="cursor-pointer hover:text-gray-500">Contact Support</p>
                         </div>
                     </div>
                 </div>
