@@ -55,5 +55,17 @@ export const authapi = {
     userlogout: async (): Promise<authreturn> => {
         const response = await Server.post("/user/api/logout");
         return response.data;
+    },
+    supportmessage : async (
+        name : string,
+        email : string,
+        message : string
+    ) : Promise<authreturn> => {
+        const response = await Server.post("/user/api/support" , {
+            name,
+            email,
+            message
+        });
+        return response.data;
     }
 }

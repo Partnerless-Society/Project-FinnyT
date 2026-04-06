@@ -30,11 +30,12 @@ export interface authcreate {
     loadinglogin: boolean,
     loadinguser : boolean,
     loadinggoogle : boolean,
+    loadingsupport : boolean,
     id : string | null,
     name : string | null,
     email : string | null,
     type : string | null,
-
+    resetacc : () => void,
     googlelogin: (
         name: string,
         email: string,
@@ -49,5 +50,10 @@ export interface authcreate {
         password: string
     ) => Promise<authreturn>,
     userfetch: () => Promise<void>,
-    userlogout : () => Promise<authreturn>
+    userlogout : () => Promise<authreturn>,
+    supportmessage : (
+        name : string,
+        email : string,
+        message : string
+    ) => Promise<authreturn>,
 }

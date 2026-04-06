@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { ArrowUp, BadgeDollarSign, Book, CircleCheck, CookieIcon, Github, HomeIcon, Linkedin, Menu, Moon, Sun, ToolboxIcon, Twitter, X } from "lucide-react"
+import { ArrowUp, BadgeDollarSign, CircleCheck, CookieIcon, Github, HomeIcon, Linkedin, Menu, Moon, Sun, ToolboxIcon, Twitter, X } from "lucide-react"
 import { useTheme } from "@/components/ui/themeprovider"
 import { useEffect, useRef, useState } from "react";
 import { carousel, features, lists, step } from "@/features/features";
@@ -166,8 +166,7 @@ export const Home = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.6, duration: 0.6 }}
                         className="flex gap-3 justify-center items-center">
-                        <Button><HomeIcon /> Get Started Free</Button>
-                        <Button><Book /> Book a Demo</Button>
+                        <Button onClick={() => navigate("/app/dashboard")}><HomeIcon /> Get Started Free</Button>
                     </motion.div>
                 </div>
             </section>
@@ -337,11 +336,12 @@ export const Home = () => {
                             <p className="max-w-xs leading-relaxed">
                                 Making financial intelligence accessible for everyone. Automate your tracking, gain insights, and grow your wealth.
                             </p>
+                            {/*
                             <div className="flex gap-5">
                                 <a href="#" className="hover:text-primary transition-colors"><Twitter size={20} /></a>
                                 <a href="#" className="hover:text-primary transition-colors"><Github size={20} /></a>
                                 <a href="#" className="hover:text-primary transition-colors"><Linkedin size={20} /></a>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <div className="mt-16 pt-8 border-t flex flex-col md:flex-row justify-between items-start gap-4">
@@ -350,8 +350,7 @@ export const Home = () => {
                         </p>
                         <div className="flex gap-5 text-xs font-medium ">
                             <p onClick={() => setopen(true)} className="cursor-pointer hover:text-gray-500">Cookies</p>
-                            <p className="cursor-pointer hover:text-gray-500">Terms</p>
-                            <p className="cursor-pointer hover:text-gray-500">Contact Support</p>
+                            <p onClick={() => navigate("/contact")} className="cursor-pointer hover:text-gray-500">Contact Support</p>
                         </div>
                     </div>
                 </div>

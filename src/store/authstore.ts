@@ -8,10 +8,18 @@ export const useAuthStore = create<authcreate>((set) => ({
     loadinglogin: false,
     loadinguser: false,
     loadinggoogle: false,
+    loadingsupport: false,
     id: null,
     name: null,
     email: null,
     type: null,
+
+    resetacc: () => set({
+        id: null,
+        name: null,
+        email: null,
+        type: null,
+    }),
 
     googlelogin: async (
         name: string,
@@ -113,6 +121,23 @@ export const useAuthStore = create<authcreate>((set) => ({
         }
         finally {
             set({ loadinguser: false });
+        }
+    },
+    supportmessage: async (
+        name : string,
+        email : string,
+        message : string
+    ) => {
+        try {
+            set({ loadingsupport: true })
+            const result = await authapi.supportmessage(name,email,message);
+            return result;
+        }
+        catch (err: unknown) {
+            throw err;
+        }
+        finally {
+            set({ loadingsupport: false })
         }
     }
 }))

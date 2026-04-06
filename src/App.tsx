@@ -14,6 +14,7 @@ import { Agenting } from "./pages/dashboard/agenting";
 import { Sidebarrrenderagent } from "./pages/sidebar/agentsidebar";
 import { GoogleSheetagent } from "./pages/agenting/googlesheetagent";
 import { Setting } from "./pages/agenting/setting";
+import ContactPage from "./pages/landing/contactpage";
 
 function App() {
 
@@ -30,7 +31,7 @@ function App() {
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <Routes>
           <Route path="/" element={<Home />} />
-
+          <Route path="/contact" element={<ContactPage/>} />
           {!id &&
           <> 
           <Route path="/login" element={<Login />} />
