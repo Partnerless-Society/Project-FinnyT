@@ -16,6 +16,7 @@ import {
 import { useAuthStore } from "@/store/authstore"
 import { useEffect, useMemo } from "react"
 import { useDataStore } from "@/store/datastore"
+import { ChartArea } from "lucide-react"
 
 
 const chartConfig = {
@@ -81,7 +82,7 @@ export function TotalOutcomeChart() {
                 <CardDescription>Total Outcome For Each Categories.</CardDescription>
             </CardHeader>
             <CardContent className="flex-1 pb-0">
-                <ChartContainer
+                {chartData.length > 0 ? (<ChartContainer
                     config={chartConfig}
                     className="mx-auto aspect-auto h-62.5"
                 >
@@ -127,7 +128,11 @@ export function TotalOutcomeChart() {
                             />
                         </Pie>
                     </PieChart>
-                </ChartContainer>
+                </ChartContainer>) : (
+                    <div className="flex items-center gap-2 justify-center h-62.5 text-muted-foreground">
+                        No data yet <ChartArea />
+                    </div>
+                )}
             </CardContent>
             <CardFooter className="flex-col gap-2 text-sm">
                 <div className="flex items-center gap-2 font-medium leading-none">

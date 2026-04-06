@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -197,6 +197,10 @@ export const Tracker = () => {
                                 <DialogTitle className="flex items-center gap-2 text-2xl">
                                     Create Data With Ai
                                 </DialogTitle>
+                                <DialogDescription className="max-md:text-start">
+                                   Note: Ai Agent May Not Be 100% Accurate.{<br/>} 
+                                   Please Make Sure The Image Is Clear.
+                                </DialogDescription>
                             </DialogHeader>
                             <label
                                 htmlFor="fileUpload"
@@ -267,7 +271,7 @@ export const Tracker = () => {
             <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-1">
                     <h1 className="text-4xl font-medium">Track Overview</h1>
-                    <p className="text-medium text-muted-foreground"></p>
+                    <p className="text-medium text-muted-foreground">Datas will reset at the end of the month.</p>
                 </div>
                 <Tabs defaultValue="Income" className="w-full">
                     <motion.div

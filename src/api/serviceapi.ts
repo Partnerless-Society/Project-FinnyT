@@ -47,5 +47,13 @@ export const serviceapi = {
             }
         });
         return response.data;
+    },
+    Serviceacdelete : async (
+        id : string
+    ) : Promise<servicereturn> => {
+        const response = await Server.post("/service/api/servicedelete",{
+            id
+        })
+        return response.data;
     }
 }

@@ -19,6 +19,7 @@ import { useAuthStore } from "@/store/authstore"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useDataStore } from "@/store/datastore"
 import { useEffect, useState } from "react"
+import { ChartArea } from "lucide-react"
 
 const monthNames = [
     "January", "February", "March", "April", "May", "June",
@@ -64,7 +65,7 @@ export function DashboardChart() {
         fetchyears(id ?? "");
     }, [id]);
 
-     //States
+    //States
     const [selectyear, setselectyear] = useState<string>("");
 
     useEffect(() => {
@@ -115,7 +116,7 @@ export function DashboardChart() {
                 </Select>
             </CardHeader>
             <CardContent>
-                <ChartContainer className="aspect-auto h-62.5 w-full" config={chartConfig}>
+                {chartData.length > 0 ? (<ChartContainer className="aspect-auto h-62.5 w-full" config={chartConfig}>
                     <AreaChart
                         accessibilityLayer
                         data={chartData}
@@ -170,7 +171,13 @@ export function DashboardChart() {
                             stackId="a"
                         />
                     </AreaChart>
-                </ChartContainer>
+                </ChartContainer>) :
+                    (
+                    <div className="flex items-center gap-2 justify-center h-62.5 text-muted-foreground">
+                        No data yet <ChartArea />
+                    </div>
+                    )
+                }
             </CardContent>
             <CardFooter>
                 <div className="flex w-full items-start gap-2 text-sm">

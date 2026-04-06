@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/store/authstore";
 import { useServiceStore } from "@/store/servicestore";
-import { User2, User, Plus, Mail, Key, EyeOff, Eye } from "lucide-react";
+import { User2, User, Plus, Mail, Key, EyeOff, Eye, Trash } from "lucide-react";
 import {
     Dialog,
     DialogContent,
@@ -24,7 +24,8 @@ export const Setting = () => {
         testconnection,
         loadingservice,
         servicefetch,
-        loadingfetch
+        loadingfetch,
+        Servicedelete
     } = useServiceStore();
     const {
         id
@@ -34,6 +35,7 @@ export const Setting = () => {
     const [email, setEmail] = useState<string>("");
     const [key, setKey] = useState<string>("");
     const [open, setopen] = useState<boolean>(false);
+    const [opendelete, setopendelete] = useState<boolean>(false);
     const [show, setshow] = useState<boolean>(false);
     const [refresh, setrefresh] = useState<boolean>(false);
 
@@ -63,9 +65,49 @@ export const Setting = () => {
         }
     }
 
+
+    const servicedelete = async () => {
+        try {
+            const result = await Servicedelete(id ?? "");
+            if (result.success) {
+                toast.success(result.message);
+            }
+        }
+        catch (err: unknown) {
+            if (err instanceof Error) {
+                const axiosError = err as any;
+                const error = axiosError.response?.data?.message || err.message;
+                toast.error(error);
+            } else {
+                toast.error("An unexpected error occurred.");
+            }
+        }
+        finally {
+            setrefresh(prev => !prev)
+            setopendelete(prev => !prev);
+        }
+    }
+
     return (
         <>
             <Toaster position="top-right" />
+
+            <Dialog open={opendelete} onOpenChange={setopendelete}>
+                <DialogContent className="sm:max-w-106.25">
+                    <DialogHeader>
+                        <DialogTitle>Delete Service Account</DialogTitle>
+                        <DialogDescription>
+                            Are you sure you want to delete your service account? This action cannot be undone.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter className="mt-4">
+                        <Button variant="outline" onClick={() => setopendelete(false)}>Cancel</Button>
+                        <Button variant="destructive" onClick={servicedelete}>
+                            {loadingservice ? "Deleting..." : "Delete"}
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
 
             <Dialog open={open} onOpenChange={setopen}>
                 <DialogContent className="sm:max-w-106.25">
@@ -162,13 +204,16 @@ export const Setting = () => {
                         </div>
                     </>)
                     :
-                    (servicedata ? (
+                    (servicedata && servicedata.email ? (
                         <div className="mt-4 flex items-center space-x-4 justify-between p-4 rounded-xl shadow-md border">
                             <div className="flex gap-2 items-center">
                                 <User2 size={25} />
-                                <p className="text-muted-foreground">{servicedata.email.substring(0, 30) + "...com"}</p>
+                                <p className="text-muted-foreground">{servicedata.email?.substring(0, 30) + "...com"}</p>
                             </div>
-                            <p className="text-muted-foreground">{new Date(servicedata.date).toLocaleDateString()}</p>
+                            <div className="flex gap-2 items-center">
+                                <Button onClick={() => setopendelete(prev => !prev)} variant="destructive"><Trash /></Button>
+                                <p className="text-muted-foreground">{new Date(servicedata.date).toLocaleDateString()}</p>
+                            </div>
                         </div>
 
                     ) : (

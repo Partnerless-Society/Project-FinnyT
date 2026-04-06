@@ -40,5 +40,8 @@ export interface servicecreate {
     ) => Promise<servicereturn>,
     fetchurl: (
         id: string
-    ) => Promise<void>
+    ) => Promise<void>,
+    Servicedelete : (
+        id : string
+    ) => Promise<servicereturn>
 }

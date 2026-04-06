@@ -87,6 +87,25 @@ export const useServiceStore = create<servicecreate>((set) => (
             finally {
                 set({ loadingurl: false })
             }
+        },
+        Servicedelete: async (
+            id: string  
+        ) => {
+            try {
+                set({ loadingservice: true })
+                const result = await serviceapi.Serviceacdelete(id);
+                set({
+                    servicedata: null,
+                    url: []
+                })
+                return result;
+            }
+            catch (err: unknown) {
+                throw err;
+            }
+            finally {
+                set({ loadingservice: false })
+            }
         }
     }
 ))
