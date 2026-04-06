@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { ArrowUp, BadgeDollarSign, CircleCheck, CookieIcon, Github, HomeIcon, Linkedin, Menu, Moon, Sun, ToolboxIcon, Twitter, X } from "lucide-react"
+import { ArrowUp, BadgeDollarSign, CircleCheck, CookieIcon, HomeIcon, Menu, Moon, Sun, ToolboxIcon, X } from "lucide-react"
 import { useTheme } from "@/components/ui/themeprovider"
 import { useEffect, useRef, useState } from "react";
 import { carousel, features, lists, step } from "@/features/features";
